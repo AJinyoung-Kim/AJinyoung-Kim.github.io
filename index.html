@@ -9,107 +9,143 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --text:   #1a1a1a;
-    --muted:  #555;
+    --muted:  #666;
     --link:   #1a56a0;
-    --line:   #e0e0e0;
+    --line:   #ddd;
     --bg:     #ffffff;
     --accent: #c9831e;
-    --max:    780px;
+    --max:    860px;
   }
   html { scroll-behavior: smooth; }
-  body { font-family: Georgia, 'Times New Roman', serif; font-size: 15.5px; line-height: 1.7; color: var(--text); background: var(--bg); }
+  body { font-family: Georgia, 'Times New Roman', serif; font-size: 15px; line-height: 1.75; color: var(--text); background: var(--bg); }
   a { color: var(--link); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
   /* NAV */
-  nav { border-bottom: 1px solid var(--line); position: sticky; top: 0; background: rgba(255,255,255,0.96); backdrop-filter: blur(4px); z-index: 10; }
-  .nav-inner { max-width: var(--max); margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 52px; }
+  nav { border-bottom: 1px solid var(--line); position: sticky; top: 0; background: rgba(255,255,255,0.97); z-index: 10; }
+  .nav-inner { max-width: var(--max); margin: 0 auto; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 54px; }
   .nav-name { font-family: Georgia, serif; font-weight: bold; font-size: 1rem; color: var(--text); }
-  .nav-links { list-style: none; display: flex; gap: 24px; }
-  .nav-links a { font-size: .875rem; color: var(--muted); font-family: Georgia, serif; }
+  .nav-links { list-style: none; display: flex; gap: 32px; }
+  .nav-links a { font-size: .9rem; color: var(--muted); }
   .nav-links a:hover { color: var(--text); text-decoration: none; }
 
-  /* LAYOUT */
-  .page { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
-  section { padding: 48px 0; border-top: 1px solid var(--line); }
+  /* PAGE WRAPPER */
+  .page { max-width: var(--max); margin: 0 auto; padding: 0 40px; }
+
+  /* SECTION */
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
   section:first-of-type { border-top: none; }
-  h2 { font-family: Georgia, serif; font-weight: bold; font-size: 1.2rem; margin-bottom: 18px; color: var(--text); }
+  h2 { font-family: Georgia, serif; font-weight: bold; font-size: 1.15rem; margin-bottom: 22px; color: var(--text); letter-spacing: .02em; }
 
-  /* HOME */
-  #home { padding: 48px 0 40px; border-top: none; }
-  .home-grid { display: grid; grid-template-columns: 160px 1fr; gap: 32px; align-items: start; }
-  .profile-photo { width: 160px; height: 200px; object-fit: cover; border-radius: 3px; border: 1px solid var(--line); background: #f4f4f4; display: flex; align-items: center; justify-content: center; font-size: .75rem; color: var(--muted); text-align: center; }
-  .home-text h1 { font-family: Georgia, serif; font-size: 1.6rem; font-weight: bold; margin-bottom: 2px; line-height: 1.2; }
-  .home-text .position { color: var(--muted); font-size: .88rem; margin-bottom: 14px; font-style: italic; }
-  .accent-rule { width: 28px; height: 2px; background: var(--accent); margin: 8px 0 14px; }
-  .home-text p { margin-bottom: 12px; color: var(--text); text-align: justify; font-size: .95rem; }
-  .home-links { margin-top: 16px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-size: .875rem; }
-  .home-links .sep { color: var(--line); }
+  /* HOME — 이름 중앙 상단, 사진 크게 왼쪽 */
+  #home { padding: 56px 0 52px; border-top: none; }
+  .home-name-center { text-align: center; margin-bottom: 44px; }
+  .home-name-center h1 { font-family: Georgia, serif; font-size: 2.2rem; font-weight: bold; color: var(--text); }
 
-  /* POSITIONS / EDUCATION — compact table under bio */
-  .bio-table { margin-top: 28px; }
-  .bio-table-title { font-size: .75rem; font-weight: bold; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border-bottom: 1.5px solid var(--text); padding-bottom: 3px; margin-bottom: 4px; }
-  .bio-row { display: grid; grid-template-columns: 108px 1fr; gap: 8px; padding: 3px 0; border-bottom: 1px dashed var(--line); font-size: .82rem; line-height: 1.35; }
+  .home-grid { display: grid; grid-template-columns: 220px 1fr; gap: 48px; align-items: start; }
+  .profile-col { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .profile-photo {
+    width: 220px; height: 275px; object-fit: cover;
+    border-radius: 3px; border: 1px solid var(--line);
+    background: #f0f0f0; display: flex; align-items: center;
+    justify-content: center; font-size: .75rem; color: var(--muted); text-align: center;
+  }
+  .profile-links { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+  .profile-links a {
+    display: block; text-align: center;
+    font-size: .82rem; padding: 7px 0;
+    background: #1a3a5c; color: #fff;
+    border-radius: 3px; font-family: Georgia, serif;
+  }
+  .profile-links a:hover { background: #c9831e; text-decoration: none; }
+
+  .home-text .position { color: var(--muted); font-size: .92rem; margin-bottom: 20px; font-style: italic; }
+  .accent-rule { width: 32px; height: 2px; background: var(--accent); margin: 6px 0 18px; }
+  .home-text p { margin-bottom: 16px; color: var(--text); text-align: justify; font-size: .95rem; }
+
+  /* POSITIONS / EDUCATION — compact */
+  .bio-table { margin-top: 32px; }
+  .bio-table-title {
+    font-size: .72rem; font-weight: bold; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--text);
+    border-bottom: 1.5px solid var(--text); padding-bottom: 4px; margin-bottom: 2px;
+  }
+  .bio-row {
+    display: grid; grid-template-columns: 110px 1fr; gap: 8px;
+    padding: 4px 0; border-bottom: 1px dashed var(--line);
+    font-size: .83rem; line-height: 1.35;
+  }
   .bio-row:last-child { border-bottom: none; }
   .bio-year { color: var(--muted); padding-top: 1px; }
   .bio-desc strong { font-weight: bold; }
   .bio-desc span { color: var(--muted); display: block; font-size: .78rem; }
 
-  /* TIMELINE IMAGE */
-  .timeline-wrap { margin-top: 32px; }
-  .timeline-wrap img { width: 100%; height: auto; display: block; }
-
   /* NEWS */
   .news-list { list-style: none; }
-  .news-list li { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: .88rem; }
+  .news-list li { display: grid; grid-template-columns: 90px 1fr; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: .9rem; }
   .news-list li:last-child { border-bottom: none; }
-  .news-date { color: var(--muted); font-size: .8rem; padding-top: 2px; }
+  .news-date { color: var(--muted); font-size: .82rem; padding-top: 2px; }
   .news-new { color: var(--accent); font-weight: bold; }
 
   /* RESEARCH */
-  .research-item { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+  .research-item { margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
   .research-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .research-item h3 { font-family: Georgia, serif; font-weight: bold; font-size: .98rem; margin-bottom: 5px; }
-  .research-item p { color: var(--muted); font-size: .88rem; text-align: justify; }
+  .research-item h3 { font-family: Georgia, serif; font-weight: bold; font-size: .98rem; margin-bottom: 6px; }
+  .research-item p { color: var(--muted); font-size: .9rem; text-align: justify; }
 
   /* PUBLICATIONS */
-  .pub-section-note { font-size: .82rem; color: var(--muted); margin-bottom: 14px; }
-  .pub-group { margin-bottom: 16px; }
-  .pub-group-title { font-size: .73rem; font-weight: bold; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border-bottom: 1.5px solid var(--text); padding-bottom: 3px; margin-bottom: 4px; }
+  .pub-section-note { font-size: .84rem; color: var(--muted); margin-bottom: 16px; }
+  .pub-group { margin-bottom: 18px; }
+  .pub-group-title {
+    font-size: .72rem; font-weight: bold; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--text);
+    border-bottom: 1.5px solid var(--text); padding-bottom: 4px; margin-bottom: 4px;
+  }
   .pub-list { list-style: none; }
-  .pub-list li { padding: 3px 0; border-bottom: 1px dashed var(--line); font-size: .82rem; line-height: 1.4; }
+  .pub-list li { padding: 4px 0; border-bottom: 1px dashed var(--line); font-size: .83rem; line-height: 1.45; }
   .pub-list li:last-child { border-bottom: none; }
   .pub-num { color: var(--muted); margin-right: 2px; font-size: .78rem; }
-  .pub-me { font-weight: bold; color: var(--text); }
+  .pub-me { font-weight: bold; }
   .pub-journal { font-style: italic; color: var(--muted); }
   .pub-tag { font-size: .72rem; color: var(--accent); margin-left: 3px; }
   .pub-doi { font-size: .75rem; color: var(--link); margin-left: 5px; }
 
-  /* CV TAB — hidden by default, shown when #cv in URL */
+  /* CV PANEL */
   #cv-panel { display: none; }
   #cv-panel.active { display: block; }
-  .cv-block { margin-bottom: 28px; }
-  .cv-block h3 { font-size: .75rem; font-weight: bold; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid var(--line); }
-  .cv-row { display: grid; grid-template-columns: 120px 1fr; gap: 10px; padding: 5px 0; font-size: .88rem; border-bottom: 1px dashed var(--line); line-height: 1.35; }
+  .cv-block { margin-bottom: 30px; }
+  .cv-block h3 {
+    font-size: .72rem; font-weight: bold; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--text);
+    border-bottom: 1.5px solid var(--text); padding-bottom: 4px; margin-bottom: 4px;
+  }
+  .cv-row {
+    display: grid; grid-template-columns: 110px 1fr; gap: 10px;
+    padding: 4px 0; font-size: .85rem; border-bottom: 1px dashed var(--line); line-height: 1.35;
+  }
   .cv-row:last-child { border-bottom: none; }
   .cv-year { color: var(--muted); font-size: .8rem; padding-top: 1px; }
   .cv-desc strong { font-weight: bold; }
-  .cv-desc span { display: block; color: var(--muted); font-size: .82rem; }
-  .cv-download { margin-top: 18px; font-size: .875rem; }
+  .cv-desc span { display: block; color: var(--muted); font-size: .8rem; }
+  .cv-download { margin-top: 20px; font-size: .9rem; }
 
   /* FOOTER */
-  footer { border-top: 1px solid var(--line); padding: 24px 0; font-size: .8rem; color: var(--muted); }
-  footer .foot-inner { max-width: var(--max); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0; font-size: .82rem; color: var(--muted); margin-top: 20px; }
+  footer .foot-inner { max-width: var(--max); margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
   footer a { color: var(--muted); }
   footer a:hover { color: var(--text); }
 
   /* RESPONSIVE */
-  @media (max-width: 600px) {
+  @media (max-width: 640px) {
     .home-grid { grid-template-columns: 1fr; }
-    .profile-photo { width: 130px; height: 163px; }
-    .nav-links { gap: 14px; }
-    .cv-row, .bio-row { grid-template-columns: 1fr; gap: 1px; }
+    .profile-photo { width: 160px; height: 200px; }
+    .profile-col { align-items: center; }
+    .nav-links { gap: 18px; }
+    .bio-row, .cv-row { grid-template-columns: 1fr; gap: 1px; }
     .news-list li { grid-template-columns: 1fr; gap: 2px; }
+    .page { padding: 0 20px; }
+    .nav-inner { padding: 0 20px; }
+    footer .foot-inner { padding: 0 20px; }
   }
 </style>
 </head>
@@ -133,12 +169,27 @@
 
   <!-- HOME -->
   <section id="home">
+
+    <!-- 이름 중앙 상단 -->
+    <div class="home-name-center">
+      <h1>Jinyoung Kim</h1>
+    </div>
+
+    <!-- 사진 왼쪽 크게 + 텍스트 오른쪽 -->
     <div class="home-grid">
-      <img class="profile-photo" src="photo.jpg" alt="Jinyoung Kim">
+      <div class="profile-col">
+        <img class="profile-photo" src="photo.jpg" alt="Jinyoung Kim">
+        <div class="profile-links">
+          <a href="mailto:jkim4046@gatech.edu">jkim4046@gatech.edu</a>
+          <a href="https://scholar.google.com/citations?hl=ko&user=LGK9LKcAAAAJ" target="_blank">Google Scholar</a>
+          <a href="https://www.linkedin.com/in/ajinyoung/" target="_blank">LinkedIn</a>
+          <a href="RESUME-JINYOUNGKIM-20260414.pdf" download>Download CV</a>
+        </div>
+      </div>
+
       <div class="home-text">
-        <h1>Jinyoung Kim, Ph.D.</h1>
-        <div class="accent-rule"></div>
         <p class="position">Research Scientist II · Koros Group · Georgia Institute of Technology</p>
+        <div class="accent-rule"></div>
         <p>
           Welcome! I am a chemical engineer with research interests in membrane separation and
           the synthesis of functional polymers, porous materials, and polymer composites. My work
@@ -157,55 +208,23 @@
           I work in the <a href="https://korosgroup.chbe.gatech.edu">Koros Group</a> at Georgia
           Tech in collaboration with Ryan Lively.
         </p>
-        <div class="home-links">
-          <a href="mailto:jkim4046@gatech.edu">jkim4046@gatech.edu</a>
-          <span class="sep">·</span>
-          <a href="https://scholar.google.com/citations?hl=ko&user=LGK9LKcAAAAJ" target="_blank">Google Scholar</a>
-          <span class="sep">·</span>
-          <a href="https://www.linkedin.com/in/ajinyoung/" target="_blank">LinkedIn</a>
-          <span class="sep">·</span>
-          <a href="RESUME-JINYOUNGKIM-20260414.pdf" download>CV (PDF)</a>
+
+        <!-- POSITIONS -->
+        <div class="bio-table" style="margin-top:28px;">
+          <p class="bio-table-title">Positions</p>
+          <div class="bio-row"><span class="bio-year">2025 – present</span><div class="bio-desc"><strong>Research Scientist II</strong><span>Dept. of Chemical Engineering, Georgia Tech</span></div></div>
+          <div class="bio-row"><span class="bio-year">2023 – 2025</span><div class="bio-desc"><strong>Postdoctoral Scholar</strong><span>Koros Group, Georgia Tech · Advisor: William J. Koros</span></div></div>
+          <div class="bio-row"><span class="bio-year">2022 – 2023</span><div class="bio-desc"><strong>Postdoctoral Scholar</strong><span>KIST, Seoul · Advisor: Seung Sang Hwang, Albert S. Lee</span></div></div>
+          <div class="bio-row"><span class="bio-year">2021 – 2022</span><div class="bio-desc"><strong>Research Specialist</strong><span>CTO Research Division, LG Innotek, Seoul</span></div></div>
+        </div>
+
+        <!-- EDUCATION -->
+        <div class="bio-table" style="margin-top:14px;">
+          <p class="bio-table-title">Education</p>
+          <div class="bio-row"><span class="bio-year">2014 – 2021</span><div class="bio-desc"><strong>Ph.D., Chemical &amp; Biomolecular Engineering</strong><span>Yonsei University, Seoul · Advisor: Haksoo Han</span></div></div>
+          <div class="bio-row"><span class="bio-year">2010 – 2013</span><div class="bio-desc"><strong>B.S., Chemical &amp; Biomolecular Engineering</strong><span>Yonsei University, Seoul</span></div></div>
         </div>
       </div>
-    </div>
-
-    <!-- POSITIONS -->
-    <div class="bio-table" style="margin-top:32px;">
-      <p class="bio-table-title">Positions</p>
-      <div class="bio-row">
-        <span class="bio-year">2025 – present</span>
-        <div class="bio-desc"><strong>Research Scientist II</strong><span>Dept. of Chemical Engineering, Georgia Tech</span></div>
-      </div>
-      <div class="bio-row">
-        <span class="bio-year">2023 – 2025</span>
-        <div class="bio-desc"><strong>Postdoctoral Scholar</strong><span>Koros Group, Georgia Tech · Advisor: William J. Koros</span></div>
-      </div>
-      <div class="bio-row">
-        <span class="bio-year">2022 – 2023</span>
-        <div class="bio-desc"><strong>Postdoctoral Scholar</strong><span>KIST, Seoul · Advisor: Seung Sang Hwang, Albert S. Lee</span></div>
-      </div>
-      <div class="bio-row">
-        <span class="bio-year">2021 – 2022</span>
-        <div class="bio-desc"><strong>Research Specialist</strong><span>CTO Research Division, LG Innotek, Seoul</span></div>
-      </div>
-    </div>
-
-    <!-- EDUCATION -->
-    <div class="bio-table" style="margin-top:16px;">
-      <p class="bio-table-title">Education</p>
-      <div class="bio-row">
-        <span class="bio-year">2014 – 2021</span>
-        <div class="bio-desc"><strong>Ph.D., Chemical &amp; Biomolecular Engineering</strong><span>Yonsei University, Seoul · Advisor: Haksoo Han</span></div>
-      </div>
-      <div class="bio-row">
-        <span class="bio-year">2010 – 2013</span>
-        <div class="bio-desc"><strong>B.S., Chemical &amp; Biomolecular Engineering</strong><span>Yonsei University, Seoul</span></div>
-      </div>
-    </div>
-
-    <!-- TIMELINE IMAGE -->
-    <div class="timeline-wrap">
-      <img src="timeline.png" alt="Career timeline: Yonsei 2021 → LG Innotek 2022 → KIST 2023 → Georgia Tech 2026">
     </div>
   </section>
 
@@ -277,9 +296,9 @@
         <li><span class="pub-num">16.</span>Kim, J., Baek, S., Lee, J., Lee, S., Ahn, C., <span class="pub-me">Kim, J.</span>, &amp; Han, H. "Improvement of trade-off between mechanical properties and dielectric of polyimide with surface modified silica nanoparticle for wafer level packaging." <span class="pub-journal">Journal of Industrial and Engineering Chemistry</span>, 114, 438–445, 2022.</li>
         <li><span class="pub-num">17.</span>Kim, S. Y., Han, S., Lee, S., Kang, J. H., Yoon, S., Park, W., ... &amp; Bae, Y. S. "Discovery of High-Performing Metal–Organic Frameworks for On-Board Methane Storage and Delivery via LNG–ANG Coupling." <span class="pub-journal">Advanced Science</span>, 9(21), 2201559, 2022.</li>
         <li><span class="pub-num">18.</span>Lee, S., Kim, G., <span class="pub-me">Kim, J.</span>, Kim, D., Lee, D., Han, H., &amp; Kim, J. "Nitrogen-Doped Porous Carbon Structure from Melamine-Assisted Polyimide Sheets for Supercapacitor Electrodes." <span class="pub-journal">Advanced Sustainable Systems</span>, 2(6), 1800007, 2018.</li>
-        <li><span class="pub-num">19.</span>Kim, K., Yoo, T., Lee, J., Kim, M., Lee, S., Kim, G., ... &amp; Han, H. "The effects of hydroxyl groups on the thermal and optical properties of poly(amide-imide)s with high adhesion for transparent films." <span class="pub-journal">Progress in Organic Coatings</span>, 112, 37–43, 2017.</li>
-        <li><span class="pub-num">20.</span>Kim, M., Kim, G., <span class="pub-me">Kim, J.</span>, Lee, D., Lee, S., Kwon, J., &amp; Han, H. "New continuous process developed for synthesizing sponge-type polyimide membrane and its pore size control method via NIPS." <span class="pub-journal">Microporous and Mesoporous Materials</span>, 242, 166–172, 2017.</li>
-        <li><span class="pub-num">21.</span>Kim, K., Yoo, T., Ha, H., <span class="pub-me">Kim, J.</span>, Han, P., &amp; Han, H. "The Effects of Amide Groups on the Thermal and Optical Properties of Poly(amide-imide)s with Low Residual Stress for Microelectronic Devices." <span class="pub-journal">Macromolecular Chemistry and Physics</span>, 217(10), 1174–1184, 2016.</li>
+        <li><span class="pub-num">19.</span>Kim, K., Yoo, T., Lee, J., Kim, M., Lee, S., Kim, G., ... &amp; Han, H. "The effects of hydroxyl groups on the thermal and optical properties of poly(amide-imide)s." <span class="pub-journal">Progress in Organic Coatings</span>, 112, 37–43, 2017.</li>
+        <li><span class="pub-num">20.</span>Kim, M., Kim, G., <span class="pub-me">Kim, J.</span>, Lee, D., Lee, S., Kwon, J., &amp; Han, H. "New continuous process developed for synthesizing sponge-type polyimide membrane via NIPS." <span class="pub-journal">Microporous and Mesoporous Materials</span>, 242, 166–172, 2017.</li>
+        <li><span class="pub-num">21.</span>Kim, K., Yoo, T., Ha, H., <span class="pub-me">Kim, J.</span>, Han, P., &amp; Han, H. "The Effects of Amide Groups on the Thermal and Optical Properties of Poly(amide-imide)s." <span class="pub-journal">Macromolecular Chemistry and Physics</span>, 217(10), 1174–1184, 2016.</li>
         <li><span class="pub-num">22.</span>Kim, K., Yoo, T., <span class="pub-me">Kim, J.</span>, Ha, H., &amp; Han, H. "Effects of dianhydrides on the thermal behavior of linear and crosslinked polyimides." <span class="pub-journal">Journal of Applied Polymer Science</span>, 132(6), 2015.</li>
         <li><span class="pub-num">23.</span>Kwon, J., <span class="pub-me">Kim, J.</span>, Park, D., &amp; Han, H. "A novel synthesis method for an open-cell microsponge polyimide for heat insulation." <span class="pub-journal">Polymer</span>, 56, 68–72, 2015.</li>
         <li><span class="pub-num">24.</span>Kwon, J., <span class="pub-me">Kim, J.</span>, Park, D., Seo, J., Han, P., &amp; Han, H. "Water sorption behavior in polyimide thin films controlled by inorganic additives." <span class="pub-journal">Macromolecular Research</span>, 22(4), 431–435, 2014.</li>
@@ -289,12 +308,12 @@
     </div>
   </section>
 
-</div><!-- /page -->
-</div><!-- /main-content -->
+</div>
+</div>
 
-<!-- CV PANEL — 별도 탭 -->
+<!-- CV PANEL -->
 <div id="cv-panel">
-<div class="page" style="padding-top:40px; padding-bottom:60px;">
+<div class="page" style="padding-top:48px; padding-bottom:64px;">
   <h2>Curriculum Vitae</h2>
 
   <div class="cv-block">
@@ -332,9 +351,9 @@
   <div class="cv-block">
     <h3>Teaching &amp; Mentoring</h3>
     <div class="cv-row"><span class="cv-year">2025 – present</span><div class="cv-desc"><strong>Mentor — Ghufran Bhatti</strong><span>Undergraduate, Chemical Engineering, Georgia Tech · Sorp-vection module fabrication</span></div></div>
-    <div class="cv-row"><span class="cv-year">2019</span><div class="cv-desc"><strong>Teaching Assistant — Polymer Synthesis Experiment</strong><span>Yonsei University (Fall 2019)</span></div></div>
-    <div class="cv-row"><span class="cv-year">2017</span><div class="cv-desc"><strong>Teaching Assistant — Chemical Engineering Experiment</strong><span>Yonsei University (Spring &amp; Fall 2017)</span></div></div>
-    <div class="cv-row"><span class="cv-year">2015</span><div class="cv-desc"><strong>Teaching Assistant — Heat Transfer / Physical Chemistry II</strong><span>Yonsei University (Spring &amp; Fall 2015)</span></div></div>
+    <div class="cv-row"><span class="cv-year">2019</span><div class="cv-desc"><strong>TA — Polymer Synthesis Experiment</strong><span>Yonsei University (Fall 2019)</span></div></div>
+    <div class="cv-row"><span class="cv-year">2017</span><div class="cv-desc"><strong>TA — Chemical Engineering Experiment</strong><span>Yonsei University (Spring &amp; Fall 2017)</span></div></div>
+    <div class="cv-row"><span class="cv-year">2015</span><div class="cv-desc"><strong>TA — Heat Transfer / Physical Chemistry II</strong><span>Yonsei University (Spring &amp; Fall 2015)</span></div></div>
   </div>
 
   <div class="cv-block">
