@@ -65,19 +65,18 @@
   .research-item h3 { font-family: var(--serif); font-weight: 600; font-size: 1rem; margin-bottom: 6px; }
   .research-item p { color: var(--muted); font-size: .9rem; }
 
-  /* PUBLICATIONS */
-  .pub-year { font-size: .8rem; font-weight: 500; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; margin: 24px 0 8px; }
-  .pub-year:first-child { margin-top: 0; }
+  /* PUBLICATIONS — compact */
+  .pub-section-note { font-size: .82rem; color: var(--muted); margin-bottom: 16px; }
+  .pub-group { margin-bottom: 18px; }
+  .pub-group-title { font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border-bottom: 1.5px solid var(--text); padding-bottom: 3px; margin-bottom: 6px; }
   .pub-list { list-style: none; }
-  .pub-list li { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: .875rem; }
+  .pub-list li { padding: 4px 0 4px 0; border-bottom: 1px dashed var(--line); font-size: .84rem; line-height: 1.45; }
   .pub-list li:last-child { border-bottom: none; }
-  .pub-title { font-weight: 500; color: var(--text); display: block; margin-bottom: 3px; }
-  .pub-meta { color: var(--muted); line-height: 1.5; }
-  .pub-meta em { font-style: italic; }
-  .pub-meta .me { color: var(--text); font-weight: 500; }
-  .pub-links { margin-top: 4px; display: flex; gap: 12px; }
-  .pub-links a { font-size: .8rem; }
-  .pub-note { font-size: .78rem; color: var(--accent); margin-top: 2px; }
+  .pub-num { color: var(--muted); margin-right: 3px; font-size: .8rem; }
+  .pub-me { font-weight: 600; color: var(--text); }
+  .pub-journal { font-style: italic; color: var(--muted); }
+  .pub-tag { font-size: .72rem; color: var(--accent); margin-left: 4px; }
+  .pub-doi { font-size: .75rem; color: var(--link); margin-left: 6px; }
 
   /* CV */
   .cv-block { margin-bottom: 32px; }
@@ -124,7 +123,6 @@
   <!-- HOME -->
   <section id="home">
     <div class="home-grid">
-      <!-- 사진 업로드 후 아래 div를 교체: <img class="profile-photo" src="photo.jpg" alt="Jinyoung Kim"> -->
       <img class="profile-photo" src="photo.jpg" alt="Jinyoung Kim">
       <div class="home-text">
         <h1>Jinyoung Kim, Ph.D.</h1>
@@ -150,7 +148,7 @@
           <span class="sep">·</span>
           <a href="https://www.linkedin.com/in/ajinyoung/" target="_blank">LinkedIn</a>
           <span class="sep">·</span>
-          <a href="RESUME-JINYOUNGKIM-2020260414.pdf" download>CV (PDF)</a>
+          <a href="RESUME-JINYOUNGKIM-20260414.pdf" download>CV (PDF)</a>
         </div>
       </div>
     </div>
@@ -188,93 +186,203 @@
     <h2>Research</h2>
     <div class="research-item">
       <h3>Sorp-vection membrane separation</h3>
-      <p>
-        Development of a CO₂-driven sorp-vection process for selective purification of silicone oils
-        by removing cyclic siloxanes. This emerging technology couples liquid-phase sorption with
-        convective carrier gas sweep through hollow fiber membranes, enabling efficient separation
-        without thermal degradation of the silicone product. (Funded by The Dow Chemical Company)
-      </p>
+      <p>Development of a CO₂-driven sorp-vection process for selective purification of silicone oils by removing cyclic siloxanes. This emerging technology couples liquid-phase sorption with convective carrier gas sweep through hollow fiber membranes, enabling efficient separation without thermal degradation of the silicone product. (Funded by The Dow Chemical Company)</p>
     </div>
     <div class="research-item">
       <h3>Hollow fiber membrane module design &amp; scale-up</h3>
-      <p>
-        Design and fabrication of high-pressure hollow fiber membrane modules, including parametric
-        studies of PDMS selective layer thickness, fiber count, and module geometry. Ongoing work
-        on diagnosing and resolving performance changes during scale-up.
-      </p>
+      <p>Design and fabrication of high-pressure hollow fiber membrane modules, including parametric studies of PDMS selective layer thickness, fiber count, and module geometry. Ongoing work on diagnosing and resolving performance changes during scale-up.</p>
     </div>
     <div class="research-item">
       <h3>Porous polyimide aerogels &amp; functional polymer composites</h3>
-      <p>
-        Synthesis of nano-porous monolithic and spherical polyimide aerogels with tunable pore size
-        and porosity. Applications span thermal insulation, electromagnetic interference shielding,
-        lithium-ion battery separators, and low-dielectric-constant films for semiconductor packaging.
-      </p>
+      <p>Synthesis of nano-porous monolithic and spherical polyimide aerogels with tunable pore size and porosity. Applications span thermal insulation, electromagnetic interference shielding, lithium-ion battery separators, and low-dielectric-constant films for semiconductor packaging.</p>
     </div>
     <div class="research-item">
       <h3>Carbon molecular sieve (CMS) hollow fiber membranes</h3>
-      <p>
-        Pyrolysis protocols and precursor chemistry for CMS hollow fibers derived from polyimide
-        precursors, targeting ultraselective H₂/CH₄ separation with scalable fabrication pathways.
-      </p>
+      <p>Pyrolysis protocols and precursor chemistry for CMS hollow fibers derived from polyimide precursors, targeting ultraselective H₂/CH₄ separation with scalable fabrication pathways.</p>
     </div>
   </section>
 
   <!-- PUBLICATIONS -->
   <section id="publications">
     <h2>Publications</h2>
-    <p style="font-size:.875rem; color:var(--muted); margin-bottom:20px;">
-      12 publications as leading author · 12 as contributing author.
+    <p class="pub-section-note">
+      12 publications as leading author · 12 as contributing author ·
       Full list on <a href="https://scholar.google.com/citations?hl=ko&user=LGK9LKcAAAAJ" target="_blank">Google Scholar</a>.
-      My name is shown in <strong style="color:var(--text)">bold</strong>.
-      († indicates equal contribution)
+      <strong>Bold</strong> = presenting/lead author. († equal contribution)
     </p>
 
-    <p class="pub-year">2026</p>
-    <ul class="pub-list">
-      <li>
-        <span class="pub-title">High-Pressure Hollow Fiber Membrane Module Design and Fabrication</span>
-        <span class="pub-meta"><span class="me">Kim, J.</span>, Ghufran, B., &amp; Koros, W. J. <em>Journal of Membrane Science Letters</em>, Submitted.</span>
-        <p class="pub-note">Submitted</p>
-      </li>
-      <li>
-        <span class="pub-title">Multi-objective optimization of an ammonia-cracking process for hydrogen production using NSGA-III</span>
-        <span class="pub-meta">Im, M., Kim, I., Oh, J., Nzisso, K. A. C., <span class="me">Kim, J.</span>, &amp; Cho, S. <em>International Journal of Hydrogen Energy</em>, 225, 154421. 2026.</span>
-      </li>
-    </ul>
+    <!-- LEADING AUTHOR -->
+    <div class="pub-group">
+      <p class="pub-group-title">Leading Author Journal Articles</p>
+      <ul class="pub-list">
+        <li>
+          <span class="pub-num">1.</span>
+          <span class="pub-me">Kim, J.</span>, Ghufran, B., &amp; Koros, W. J.
+          "High-Pressure Hollow Fiber Membrane Module Design and Fabrication."
+          <span class="pub-journal">Journal of Membrane Science Letters</span>, Submitted, 2026.
+          <span class="pub-tag">Submitted</span>
+        </li>
+        <li>
+          <span class="pub-num">2.</span>
+          Im, M., Kim, I., Oh, J., Nzisso, K. A. C., <span class="pub-me">Kim, J.</span>, &amp; Cho, S.
+          "Multi-objective optimization of an ammonia-cracking process for hydrogen production using NSGA-III: Balancing economy with NOx and CO2 emissions."
+          <span class="pub-journal">International Journal of Hydrogen Energy</span>, 225, 154421, 2026.
+        </li>
+        <li>
+          <span class="pub-num">3.</span>
+          <span class="pub-me">Kim, J.</span>, Cao, Y., Qiu, W., Liu, Z., Schlosser, S., Haghpanah, R., Katsoulis, D., Rose, J., Kim, S., Balogun, H. A., Lively, R., &amp; Koros, W. J.
+          "Sorp-Vection-Based Membrane Silicone Oil Purification."
+          <span class="pub-journal">Angewandte Chemie</span>, 2026, e202516848.
+          <a class="pub-doi" href="https://doi.org/10.1002/anie.202516848" target="_blank">DOI</a>
+        </li>
+        <li>
+          <span class="pub-num">4.</span>
+          <span class="pub-me">Kim, J.</span>†, Kim, G.†, Baek, S., Kwon, J., Kim, J., Kim, S. Y., ... &amp; Han, H.
+          "Simple assembling process for polyimide aerogel and its application in water pollutants absorption."
+          <span class="pub-journal">Journal of Porous Materials</span>, 29(3), 861–868, 2022.
+        </li>
+        <li>
+          <span class="pub-num">5.</span>
+          Lee, J.; Baek, S.; <span class="pub-me">Kim, J.</span>; Lee, S.; Kim, J.*; Han, H.*
+          "Highly Soluble Fluorinated Polyimides Synthesized with Hydrothermal Process towards Sustainable Green Technology."
+          <span class="pub-journal">Polymers</span>, 13(21), 3824, 2021.
+        </li>
+        <li>
+          <span class="pub-num">6.</span>
+          Yuan-Hu, L.†, <span class="pub-me">Kim, J.</span>†, Lee, S., Kim, G., &amp; Han, H.
+          "Efficiency improvement of a fuel cell cogeneration plant linked with district heating."
+          <span class="pub-journal">Applied Thermal Engineering</span>, 117754, 2021.
+        </li>
+        <li>
+          <span class="pub-num">7.</span>
+          <span class="pub-me">Kim, J.</span>†, Kim, G.†, S. Y., Lee, S., Kim, Y., Lee, J., ... &amp; Han, H.
+          "Fabrication of highly flexible electromagnetic interference shielding polyimide carbon black composite using hot-pressing method."
+          <span class="pub-journal">Composites Part B: Engineering</span>, 109010, 2021.
+        </li>
+        <li>
+          <span class="pub-num">8.</span>
+          Kim, G.†, <span class="pub-me">Kim, J.</span>†, Jeong, J., Lee, D., Kim, M., Lee, S., ... &amp; Han, H.
+          "High Temperature Applicable Separator by Using Polyimide aerogel/polyethylene Double-Layer Composite Membrane for High-Safety Lithium Ion Battery."
+          <span class="pub-journal">Int. J. Electrochem. Sci</span>, 14, 7133–7148, 2019.
+        </li>
+        <li>
+          <span class="pub-num">9.</span>
+          Lee, D.†, <span class="pub-me">Kim, J.</span>†, Kim, S., Kim, G., Roh, J., Lee, S., &amp; Han, H.
+          "Tunable pore size and porosity of spherical polyimide aerogel by introducing swelling method based on spherulitic formation mechanism."
+          <span class="pub-journal">Microporous and Mesoporous Materials</span>, 288, 109546, 2019.
+        </li>
+        <li>
+          <span class="pub-num">10.</span>
+          Li Y.†, <span class="pub-me">Kim, J.</span>†, Kim, S., &amp; Han, H.
+          "Use of latent heat recovery from liquefied natural gas combustion for increasing the efficiency of a combined-cycle gas turbine power plant."
+          <span class="pub-journal">Applied Thermal Engineering</span>, 161, 114177, 2019.
+        </li>
+        <li>
+          <span class="pub-num">11.</span>
+          <span class="pub-me">Kim, J.</span>, Kwon, J., Lee, D., Kim, M., &amp; Han, H.
+          "Heat dissipation properties of polyimide nanocomposite films."
+          <span class="pub-journal">Korean Journal of Chemical Engineering</span>, 33(11), 3245–3250, 2016.
+        </li>
+        <li>
+          <span class="pub-num">12.</span>
+          <span class="pub-me">Kim, J.</span>, Kwon, J., Kim, S. I., Kim, M., Lee, D., Lee, S., ... &amp; Han, H.
+          "One-step synthesis of nano-porous monolithic polyimide aerogel."
+          <span class="pub-journal">Microporous and Mesoporous Materials</span>, 234, 35–42, 2016.
+        </li>
+        <li>
+          <span class="pub-num">13.</span>
+          <span class="pub-me">Kim, J.</span>, Kwon, J., Kim, M., Do, J., Lee, D., &amp; Han, H.
+          "Low-dielectric-constant polyimide aerogel composite films with low water uptake."
+          <span class="pub-journal">Polymer Journal</span>, 48(7), 829, 2016.
+        </li>
+      </ul>
+    </div>
 
-    <p class="pub-year">2025</p>
-    <ul class="pub-list">
-      <li>
-        <span class="pub-title">Sorp-Vection-Based Membrane Silicone Oil Purification</span>
-        <span class="pub-meta"><span class="me">Kim, J.</span>, Cao, Y., Qiu, W., Liu, Z., Schlosser, S., Haghpanah, R., Katsoulis, D., Rose, J., Kim, S., Balogun, H. A., Lively, R., &amp; Koros, W. J. <em>Angewandte Chemie</em>, 2025, e202516848.</span>
-        <div class="pub-links"><a href="https://doi.org/10.1002/anie.202516848" target="_blank">DOI</a></div>
-      </li>
-    </ul>
-
-    <p class="pub-year">Earlier (Selected)</p>
-    <ul class="pub-list">
-      <li>
-        <span class="pub-title">Simple assembling process for polyimide aerogel and its application in water pollutants absorption</span>
-        <span class="pub-meta"><span class="me">Kim, J.</span>†, Kim, G.†, et al. <em>Journal of Porous Materials</em>, 29(3), 861–868. 2022.</span>
-      </li>
-      <li>
-        <span class="pub-title">Fabrication of highly flexible electromagnetic interference shielding polyimide carbon black composite</span>
-        <span class="pub-meta"><span class="me">Kim, J.</span>†, Kim, G.†, et al. <em>Composites Part B: Engineering</em>, 109010. 2021.</span>
-      </li>
-      <li>
-        <span class="pub-title">Tunable pore size and porosity of spherical polyimide aerogel by introducing swelling method</span>
-        <span class="pub-meta">Lee, D.†, <span class="me">Kim, J.</span>†, et al. <em>Microporous and Mesoporous Materials</em>, 288, 109546. 2019.</span>
-      </li>
-      <li>
-        <span class="pub-title">One-step synthesis of nano-porous monolithic polyimide aerogel</span>
-        <span class="pub-meta"><span class="me">Kim, J.</span>, Kwon, J., Lee, D., Kim, M., &amp; Han, H. <em>Microporous and Mesoporous Materials</em>, 234, 35–42. 2016.</span>
-      </li>
-      <li>
-        <span class="pub-title">Low-dielectric-constant polyimide aerogel composite films with low water uptake</span>
-        <span class="pub-meta"><span class="me">Kim, J.</span>, Kwon, J., Kim, M., Do, J., Lee, D., &amp; Han, H. <em>Polymer Journal</em>, 48(7), 829. 2016.</span>
-      </li>
-    </ul>
+    <!-- CONTRIBUTING AUTHOR -->
+    <div class="pub-group">
+      <p class="pub-group-title">Contributing Author Journal Articles</p>
+      <ul class="pub-list">
+        <li>
+          <span class="pub-num">14.</span>
+          Cao Y., Liu Z., <span class="pub-me">Kim J.</span>, Schlosser S., Lively R. P. &amp; Koros W. J.
+          "High-efficiency separation of H₂/CH₄ using ultraselective carbon molecular sieve hollow fiber membranes — a scalable path forward."
+          <span class="pub-journal">Advanced Materials</span>, Submitted, 2026.
+          <span class="pub-tag">Submitted</span>
+        </li>
+        <li>
+          <span class="pub-num">15.</span>
+          Liu, Z., Cao, Y., Qiu, W., <span class="pub-me">Kim, J.</span>, Campbell, Z. S., Schlosser, S., &amp; Koros, W. J.
+          "Insights on influence of polymer molecular weight on gas sorption, transport and plasticization in glassy 6FDA-DAM polyimide membranes."
+          <span class="pub-journal">Journal of Membrane Science</span>, 712, 123242, 2024.
+        </li>
+        <li>
+          <span class="pub-num">16.</span>
+          Kim, J., Baek, S., Lee, J., Lee, S., Ahn, C., <span class="pub-me">Kim, J.</span>, &amp; Han, H.
+          "Improvement of trade-off between mechanical properties and dielectric of polyimide with surface modified silica nanoparticle for wafer level packaging."
+          <span class="pub-journal">Journal of Industrial and Engineering Chemistry</span>, 114, 438–445, 2022.
+        </li>
+        <li>
+          <span class="pub-num">17.</span>
+          Kim, S. Y., Han, S., Lee, S., Kang, J. H., Yoon, S., Park, W., ... &amp; Bae, Y. S.
+          "Discovery of High-Performing Metal–Organic Frameworks for On-Board Methane Storage and Delivery via LNG–ANG Coupling."
+          <span class="pub-journal">Advanced Science</span>, 9(21), 2201559, 2022.
+        </li>
+        <li>
+          <span class="pub-num">18.</span>
+          Lee, S., Kim, G., <span class="pub-me">Kim, J.</span>, Kim, D., Lee, D., Han, H., &amp; Kim, J.
+          "Nitrogen-Doped Porous Carbon Structure from Melamine-Assisted Polyimide Sheets for Supercapacitor Electrodes."
+          <span class="pub-journal">Advanced Sustainable Systems</span>, 2(6), 1800007, 2018.
+        </li>
+        <li>
+          <span class="pub-num">19.</span>
+          Kim, K., Yoo, T., Lee, J., Kim, M., Lee, S., Kim, G., ... &amp; Han, H.
+          "The effects of hydroxyl groups on the thermal and optical properties of poly(amide-imide)s with high adhesion for transparent films."
+          <span class="pub-journal">Progress in Organic Coatings</span>, 112, 37–43, 2017.
+        </li>
+        <li>
+          <span class="pub-num">20.</span>
+          Kim, M., Kim, G., <span class="pub-me">Kim, J.</span>, Lee, D., Lee, S., Kwon, J., &amp; Han, H.
+          "New continuous process developed for synthesizing sponge-type polyimide membrane and its pore size control method via non-solvent induced phase separation (NIPS)."
+          <span class="pub-journal">Microporous and Mesoporous Materials</span>, 242, 166–172, 2017.
+        </li>
+        <li>
+          <span class="pub-num">21.</span>
+          Kim, K., Yoo, T., Ha, H., <span class="pub-me">Kim, J.</span>, Han, P., &amp; Han, H.
+          "The Effects of Amide Groups on the Thermal and Optical Properties of Poly(amide-imide)s with Low Residual Stress for Microelectronic Devices."
+          <span class="pub-journal">Macromolecular Chemistry and Physics</span>, 217(10), 1174–1184, 2016.
+        </li>
+        <li>
+          <span class="pub-num">22.</span>
+          Kim, K., Yoo, T., <span class="pub-me">Kim, J.</span>, Ha, H., &amp; Han, H.
+          "Effects of dianhydrides on the thermal behavior of linear and crosslinked polyimides."
+          <span class="pub-journal">Journal of Applied Polymer Science</span>, 132(6), 2015.
+        </li>
+        <li>
+          <span class="pub-num">23.</span>
+          Kwon, J., <span class="pub-me">Kim, J.</span>, Park, D., &amp; Han, H.
+          "A novel synthesis method for an open-cell microsponge polyimide for heat insulation."
+          <span class="pub-journal">Polymer</span>, 56, 68–72, 2015.
+        </li>
+        <li>
+          <span class="pub-num">24.</span>
+          Kwon, J., <span class="pub-me">Kim, J.</span>, Park, D., Seo, J., Han, P., &amp; Han, H.
+          "Water sorption behavior in polyimide thin films controlled by inorganic additives."
+          <span class="pub-journal">Macromolecular Research</span>, 22(4), 431–435, 2014.
+        </li>
+        <li>
+          <span class="pub-num">25.</span>
+          Kwon, J., <span class="pub-me">Kim, J.</span>, Lee, J., Han, P., Park, D., &amp; Han, H.
+          "Fabrication of polyimide composite films based on carbon black for high-temperature resistance."
+          <span class="pub-journal">Polymer Composites</span>, 35(11), 2214–2220, 2014.
+        </li>
+        <li>
+          <span class="pub-num">26.</span>
+          Kwon, J., <span class="pub-me">Kim, J.</span>, Yoo, T., Park, D., &amp; Han, H.
+          "Preparation and characterization of spherical polyimide aerogel microparticles."
+          <span class="pub-journal">Macromolecular Materials and Engineering</span>, 299(9), 1081–1088, 2014.
+        </li>
+      </ul>
+    </div>
   </section>
 
   <!-- CV -->
