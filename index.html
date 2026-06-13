@@ -3,274 +3,103 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AJ [Your Name]</title>
-<meta name="description" content="Postdoctoral researcher at Georgia Tech working on membrane separations and sorp-vection transport theory.">
+<title>Jinyoung Kim</title>
+<meta name="description" content="Research Scientist at Georgia Tech working on membrane separations and sorp-vection transport theory.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --text:   #1a1a1a;
     --muted:  #555;
     --link:   #1a56a0;
     --line:   #e0e0e0;
     --bg:     #ffffff;
-    --accent: #c9831e;   /* amber — 멤브레인 polyimide 색, 딱 한 군데만 씀 */
+    --accent: #c9831e;
     --serif:  'Source Serif 4', Georgia, serif;
     --sans:   'Inter', -apple-system, sans-serif;
     --max:    780px;
   }
-
   html { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-
-  body {
-    font-family: var(--sans);
-    font-size: 15.5px;
-    line-height: 1.7;
-    color: var(--text);
-    background: var(--bg);
-  }
-
+  body { font-family: var(--sans); font-size: 15.5px; line-height: 1.7; color: var(--text); background: var(--bg); }
   a { color: var(--link); text-decoration: none; }
   a:hover { text-decoration: underline; }
   a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-  /* ── NAV ── */
-  nav {
-    border-bottom: 1px solid var(--line);
-    position: sticky; top: 0;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(4px);
-    z-index: 10;
-  }
-  .nav-inner {
-    max-width: var(--max);
-    margin: 0 auto;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 52px;
-  }
-  .nav-name {
-    font-family: var(--serif);
-    font-weight: 600;
-    font-size: 1rem;
-    color: var(--text);
-  }
-  .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 28px;
-  }
-  .nav-links a {
-    font-size: .875rem;
-    color: var(--muted);
-    letter-spacing: .01em;
-  }
+  /* NAV */
+  nav { border-bottom: 1px solid var(--line); position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(4px); z-index: 10; }
+  .nav-inner { max-width: var(--max); margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 52px; }
+  .nav-name { font-family: var(--serif); font-weight: 600; font-size: 1rem; color: var(--text); }
+  .nav-links { list-style: none; display: flex; gap: 24px; }
+  .nav-links a { font-size: .875rem; color: var(--muted); }
   .nav-links a:hover { color: var(--text); text-decoration: none; }
 
-  /* ── LAYOUT WRAPPER ── */
-  .page {
-    max-width: var(--max);
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  /* ── SECTIONS ── */
-  section {
-    padding: 56px 0;
-    border-top: 1px solid var(--line);
-  }
+  /* LAYOUT */
+  .page { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+  section { padding: 52px 0; border-top: 1px solid var(--line); }
   section:first-of-type { border-top: none; }
+  h2 { font-family: var(--serif); font-weight: 600; font-size: 1.25rem; margin-bottom: 20px; color: var(--text); }
 
-  h2 {
-    font-family: var(--serif);
-    font-weight: 600;
-    font-size: 1.25rem;
-    margin-bottom: 20px;
-    color: var(--text);
-  }
+  /* HOME */
+  #home { padding: 52px 0 48px; border-top: none; }
+  .home-grid { display: grid; grid-template-columns: 168px 1fr; gap: 36px; align-items: start; }
+  .profile-photo { width: 168px; height: 210px; object-fit: cover; border-radius: 4px; border: 1px solid var(--line); background: #f4f4f4; display: flex; align-items: center; justify-content: center; font-size: .75rem; color: var(--muted); text-align: center; line-height: 1.4; }
+  .home-text h1 { font-family: var(--serif); font-size: 1.75rem; font-weight: 600; margin-bottom: 4px; line-height: 1.2; }
+  .home-text .position { color: var(--muted); font-size: .9rem; margin-bottom: 18px; }
+  .home-text p { margin-bottom: 14px; color: var(--text); }
+  .accent-rule { width: 32px; height: 2px; background: var(--accent); margin: 10px 0 16px; }
+  .home-links { margin-top: 20px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-size: .875rem; }
+  .home-links .sep { color: var(--line); }
 
-  /* ── HOME / HERO ── */
-  #home {
-    padding: 52px 0 48px;
-    border-top: none;
-  }
-  .home-grid {
-    display: grid;
-    grid-template-columns: 168px 1fr;
-    gap: 36px;
-    align-items: start;
-  }
-  .profile-photo {
-    width: 168px;
-    height: 210px;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid var(--line);
-    background: #f4f4f4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: .75rem;
-    color: var(--muted);
-    text-align: center;
-    line-height: 1.4;
-  }
-  .home-text h1 {
-    font-family: var(--serif);
-    font-size: 1.75rem;
-    font-weight: 600;
-    margin-bottom: 4px;
-    line-height: 1.2;
-  }
-  .home-text .position {
-    color: var(--muted);
-    font-size: .9rem;
-    margin-bottom: 18px;
-  }
-  .home-text p {
-    margin-bottom: 14px;
-    color: var(--text);
-  }
-  .home-links {
-    margin-top: 20px;
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .home-links a {
-    font-size: .875rem;
-  }
-  .home-links .sep {
-    color: var(--line);
-  }
-  /* accent — 딱 이름 아래 한 줄짜리 소속 구분선에만 */
-  .accent-rule {
-    width: 32px;
-    height: 2px;
-    background: var(--accent);
-    margin: 10px 0 16px;
-  }
-
-  /* ── NEWS ── */
-  .news-list {
-    list-style: none;
-  }
-  .news-list li {
-    display: grid;
-    grid-template-columns: 96px 1fr;
-    gap: 12px;
-    padding: 9px 0;
-    border-bottom: 1px solid var(--line);
-    font-size: .9rem;
-  }
+  /* NEWS */
+  .news-list { list-style: none; }
+  .news-list li { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: .9rem; }
   .news-list li:last-child { border-bottom: none; }
   .news-date { color: var(--muted); font-size: .82rem; padding-top: 2px; }
   .news-new { color: var(--accent); font-weight: 500; }
 
-  /* ── RESEARCH ── */
-  .research-item {
-    margin-bottom: 28px;
-    padding-bottom: 28px;
-    border-bottom: 1px solid var(--line);
-  }
+  /* RESEARCH */
+  .research-item { margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
   .research-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .research-item h3 {
-    font-family: var(--serif);
-    font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 6px;
-  }
-  .research-item p {
-    color: var(--muted);
-    font-size: .9rem;
-  }
+  .research-item h3 { font-family: var(--serif); font-weight: 600; font-size: 1rem; margin-bottom: 6px; }
+  .research-item p { color: var(--muted); font-size: .9rem; }
 
-  /* ── PUBLICATIONS ── */
-  .pub-year {
-    font-size: .8rem;
-    font-weight: 500;
-    letter-spacing: .08em;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin: 24px 0 8px;
-  }
+  /* PUBLICATIONS */
+  .pub-year { font-size: .8rem; font-weight: 500; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; margin: 24px 0 8px; }
   .pub-year:first-child { margin-top: 0; }
-  .pub-list {
-    list-style: none;
-  }
-  .pub-list li {
-    padding: 12px 0;
-    border-bottom: 1px solid var(--line);
-    font-size: .9rem;
-  }
+  .pub-list { list-style: none; }
+  .pub-list li { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: .875rem; }
   .pub-list li:last-child { border-bottom: none; }
   .pub-title { font-weight: 500; color: var(--text); display: block; margin-bottom: 3px; }
-  .pub-meta { color: var(--muted); }
+  .pub-meta { color: var(--muted); line-height: 1.5; }
   .pub-meta em { font-style: italic; }
   .pub-meta .me { color: var(--text); font-weight: 500; }
   .pub-links { margin-top: 4px; display: flex; gap: 12px; }
   .pub-links a { font-size: .8rem; }
+  .pub-note { font-size: .78rem; color: var(--accent); margin-top: 2px; }
 
-  /* ── CV ── */
+  /* CV */
   .cv-block { margin-bottom: 32px; }
-  .cv-block h3 {
-    font-size: .8rem;
-    font-weight: 500;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 10px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid var(--line);
-  }
-  .cv-row {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 12px;
-    padding: 8px 0;
-    font-size: .9rem;
-    border-bottom: 1px dashed var(--line);
-  }
+  .cv-block h3 { font-size: .8rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+  .cv-row { display: grid; grid-template-columns: 120px 1fr; gap: 12px; padding: 8px 0; font-size: .9rem; border-bottom: 1px dashed var(--line); }
   .cv-row:last-child { border-bottom: none; }
   .cv-year { color: var(--muted); font-size: .82rem; padding-top: 2px; }
   .cv-desc strong { font-weight: 500; }
   .cv-desc span { display: block; color: var(--muted); font-size: .85rem; }
-  .cv-download {
-    margin-top: 20px;
-    font-size: .875rem;
-  }
+  .cv-download { margin-top: 20px; font-size: .875rem; }
 
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--line);
-    padding: 28px 0;
-    font-size: .82rem;
-    color: var(--muted);
-  }
-  footer .foot-inner {
-    max-width: var(--max);
-    margin: 0 auto;
-    padding: 0 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
+  /* FOOTER */
+  footer { border-top: 1px solid var(--line); padding: 28px 0; font-size: .82rem; color: var(--muted); }
+  footer .foot-inner { max-width: var(--max); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
   footer a { color: var(--muted); }
   footer a:hover { color: var(--text); }
 
-  /* ── RESPONSIVE ── */
+  /* RESPONSIVE */
   @media (max-width: 600px) {
     .home-grid { grid-template-columns: 1fr; }
     .profile-photo { width: 140px; height: 175px; }
-    .nav-links { gap: 16px; }
+    .nav-links { gap: 14px; }
     .cv-row { grid-template-columns: 1fr; gap: 2px; }
     .news-list li { grid-template-columns: 1fr; gap: 2px; }
   }
@@ -280,7 +109,7 @@
 
 <nav>
   <div class="nav-inner">
-    <span class="nav-name">AJ [Your Name]</span>
+    <span class="nav-name">Jinyoung Kim</span>
     <ul class="nav-links">
       <li><a href="#home">Home</a></li>
       <li><a href="#research">Research</a></li>
@@ -295,41 +124,35 @@
   <!-- HOME -->
   <section id="home">
     <div class="home-grid">
-
-      <!-- 사진: 업로드 후 아래 div를 <img class="profile-photo" src="photo.jpg" alt="AJ"> 로 교체 -->
+      <!-- 사진 업로드 후 아래 div를 교체: <img class="profile-photo" src="photo.jpg" alt="Jinyoung Kim"> -->
       <div class="profile-photo">Photo<br>600 × 750 px</div>
-
       <div class="home-text">
-        <h1>AJ [Your Name]</h1>
+        <h1>Jinyoung Kim, Ph.D.</h1>
         <div class="accent-rule"></div>
-        <p class="position">Postdoctoral Researcher · Koros Group · Georgia Institute of Technology</p>
-
+        <p class="position">Research Scientist II · Koros Group · Georgia Institute of Technology</p>
         <p>
-          Welcome! I am a membrane scientist developing transport theory and hollow fiber
-          membrane platforms for energy-efficient gas separations. My work focuses on
-          <strong>sorp-vection</strong> — a hybrid transport mode that couples liquid-phase
-          sorption with convective carrier gas sweep — and on translating this understanding
-          into scalable membrane modules.
-          <!-- [한 문단 자기소개로 다듬기] -->
+          Welcome! I am a chemical engineer with research interests in membrane separation and
+          the synthesis of functional polymers, porous materials, and polymer composites. My work
+          spans material and system design, experimental synthesis and characterization, and
+          industrial applications — with a focus on demonstrating materials-based solutions for
+          diverse technological challenges.
         </p>
         <p>
-          I completed my Ph.D. at [University] and am currently a postdoc in the
-          <a href="https://korosgroup.chbe.gatech.edu">Koros Group</a> at Georgia Tech,
-          supported in part by the GTNext fund.
-          <!-- [경력 한 줄] -->
+          I currently lead development of a novel CO₂-driven <strong>sorp-vection</strong> membrane
+          separation process for selective purification of silicone oils, funded by The Dow Chemical
+          Company. I work in the <a href="https://korosgroup.chbe.gatech.edu">Koros Group</a> at
+          Georgia Tech, in collaboration with Ryan Lively and Krista Walton.
         </p>
-
         <div class="home-links">
-          <a href="mailto:you@gatech.edu">you@gatech.edu</a>
+          <a href="mailto:jkim4046@gatech.edu">jkim4046@gatech.edu</a>
           <span class="sep">·</span>
-          <a href="#">Google Scholar</a>
+          <a href="https://scholar.google.com/citations?hl=ko&user=LGK9LKcAAAAJ" target="_blank">Google Scholar</a>
           <span class="sep">·</span>
-          <a href="#">CV (PDF)</a>
+          <a href="https://www.linkedin.com/in/ajinyoung/" target="_blank">LinkedIn</a>
           <span class="sep">·</span>
-          <a href="#">LinkedIn</a>
+          <a href="RESUME-JINYOUNGKIM_20260414.pdf" download>CV (PDF)</a>
         </div>
       </div>
-
     </div>
   </section>
 
@@ -338,20 +161,24 @@
     <h2>News</h2>
     <ul class="news-list">
       <li>
-        <span class="news-date">Jun 2026</span>
-        <span><span class="news-new">New —</span> [소식: 논문 제출, 수상, 발표 등]</span>
+        <span class="news-date">2026</span>
+        <span><span class="news-new">New —</span> Paper on high-pressure hollow fiber membrane module design submitted to <em>Journal of Membrane Science Letters</em>.</span>
       </li>
       <li>
-        <span class="news-date">May 2026</span>
-        <span>Presented at [Conference, City]. <!-- [교체] --></span>
+        <span class="news-date">Nov 2025</span>
+        <span>Presented at AIChE Annual Meeting, Boston, MA.</span>
       </li>
       <li>
-        <span class="news-date">Mar 2026</span>
-        <span>[소식]</span>
+        <span class="news-date">May 2025</span>
+        <span>Presented at North American Membrane Society Annual Meeting, Nashville, TN.</span>
       </li>
       <li>
-        <span class="news-date">Jan 2026</span>
-        <span>[소식]</span>
+        <span class="news-date">Aug 2025</span>
+        <span>Received <strong>Shark Tank Award</strong> at 2025 SEED Conference, Atlanta, GA.</span>
+      </li>
+      <li>
+        <span class="news-date">2025</span>
+        <span>Sorp-vection membrane silicone oil purification paper published in <em>Angewandte Chemie</em>.</span>
       </li>
     </ul>
   </section>
@@ -359,99 +186,93 @@
   <!-- RESEARCH -->
   <section id="research">
     <h2>Research</h2>
-
     <div class="research-item">
-      <h3>Sorp-vection transport theory</h3>
+      <h3>Sorp-vection membrane separation</h3>
       <p>
-        Extending the Damle–Koros framework by incorporating liquid-phase carrier gas
-        solubility into the sorp-vection driving force. This reframes carrier gas selection
-        (CO₂, N₂, Xe, SF₆) as a tunable design variable rather than a passive choice,
-        opening new parametric space for module optimization.
-        <!-- [수정] -->
+        Development of a CO₂-driven sorp-vection process for selective purification of silicone oils
+        by removing cyclic siloxanes. This emerging technology couples liquid-phase sorption with
+        convective carrier gas sweep through hollow fiber membranes, enabling efficient separation
+        without thermal degradation of the silicone product. (Funded by The Dow Chemical Company)
       </p>
     </div>
-
     <div class="research-item">
-      <h3>PDMS hollow fiber platforms &amp; module scale-up</h3>
+      <h3>Hollow fiber membrane module design &amp; scale-up</h3>
       <p>
-        Parametric studies of PDMS selective layer thickness, fiber count, and carrier gas
-        selection for sorp-vection modules. Ongoing work on diagnosing and resolving
-        performance changes during scale-up from lab to larger module configurations.
-        <!-- [수정] -->
+        Design and fabrication of high-pressure hollow fiber membrane modules, including parametric
+        studies of PDMS selective layer thickness, fiber count, and module geometry. Ongoing work
+        on diagnosing and resolving performance changes during scale-up.
       </p>
     </div>
-
     <div class="research-item">
-      <h3>Surface modification of PDMS membranes</h3>
+      <h3>Porous polyimide aerogels &amp; functional polymer composites</h3>
       <p>
-        Plasma and chemical routes to introduce polar functionality onto PDMS surfaces,
-        characterized by FTIR and XPS. Exploring masking strategies (PVA sacrificial
-        lift-off) for selective coating of hollow fiber lumen surfaces.
-        <!-- [수정] -->
+        Synthesis of nano-porous monolithic and spherical polyimide aerogels with tunable pore size
+        and porosity. Applications span thermal insulation, electromagnetic interference shielding,
+        lithium-ion battery separators, and low-dielectric-constant films for semiconductor packaging.
       </p>
     </div>
-
     <div class="research-item">
-      <h3>Carbon molecular sieve (CMS) hollow fibers</h3>
+      <h3>Carbon molecular sieve (CMS) hollow fiber membranes</h3>
       <p>
-        Precursor chemistry and pyrolysis protocols for CMS hollow fibers derived from
-        novel polyimide dianhydrides. Work includes fiber coating and blocking-risk
-        mitigation prior to high-temperature treatment.
-        <!-- [수정] -->
+        Pyrolysis protocols and precursor chemistry for CMS hollow fibers derived from polyimide
+        precursors, targeting ultraselective H₂/CH₄ separation with scalable fabrication pathways.
       </p>
     </div>
-
   </section>
 
   <!-- PUBLICATIONS -->
   <section id="publications">
     <h2>Publications</h2>
     <p style="font-size:.875rem; color:var(--muted); margin-bottom:20px;">
-      Full list on <a href="#">Google Scholar</a> and <a href="#">ORCID</a>.
+      12 publications as leading author · 12 as contributing author.
+      Full list on <a href="https://scholar.google.com/citations?hl=ko&user=LGK9LKcAAAAJ" target="_blank">Google Scholar</a>.
       My name is shown in <strong style="color:var(--text)">bold</strong>.
+      († indicates equal contribution)
     </p>
 
     <p class="pub-year">2026</p>
     <ul class="pub-list">
       <li>
-        <span class="pub-title">[Paper title — sorp-vection driving force framework]</span>
-        <span class="pub-meta">
-          <span class="me">A. J. [Name]</span>, W. J. Koros.
-          <em>Journal of Membrane Science</em>, 2026.
-        </span>
-        <div class="pub-links"><a href="#">DOI</a><a href="#">PDF</a></div>
+        <span class="pub-title">High-Pressure Hollow Fiber Membrane Module Design and Fabrication</span>
+        <span class="pub-meta"><span class="me">Kim, J.</span>, Ghufran, B., &amp; Koros, W. J. <em>Journal of Membrane Science Letters</em>, Submitted.</span>
+        <p class="pub-note">Submitted</p>
       </li>
       <li>
-        <span class="pub-title">[Paper title]</span>
-        <span class="pub-meta">
-          [Authors], <span class="me">A. J. [Name]</span>.
-          <em>[Journal]</em>, 2026.
-        </span>
-        <div class="pub-links"><a href="#">DOI</a></div>
+        <span class="pub-title">Multi-objective optimization of an ammonia-cracking process for hydrogen production using NSGA-III</span>
+        <span class="pub-meta">Im, M., Kim, I., Oh, J., Nzisso, K. A. C., <span class="me">Kim, J.</span>, &amp; Cho, S. <em>International Journal of Hydrogen Energy</em>, 225, 154421. 2026.</span>
       </li>
     </ul>
 
     <p class="pub-year">2025</p>
     <ul class="pub-list">
       <li>
-        <span class="pub-title">[Paper title]</span>
-        <span class="pub-meta">
-          <span class="me">A. J. [Name]</span>, [Authors].
-          <em>[Journal]</em>, 2025.
-        </span>
-        <div class="pub-links"><a href="#">DOI</a><a href="#">PDF</a></div>
+        <span class="pub-title">Sorp-Vection-Based Membrane Silicone Oil Purification</span>
+        <span class="pub-meta"><span class="me">Kim, J.</span>, Cao, Y., Qiu, W., Liu, Z., Schlosser, S., Haghpanah, R., Katsoulis, D., Rose, J., Kim, S., Balogun, H. A., Lively, R., &amp; Koros, W. J. <em>Angewandte Chemie</em>, 2025, e202516848.</span>
+        <div class="pub-links"><a href="https://doi.org/10.1002/anie.202516848" target="_blank">DOI</a></div>
       </li>
     </ul>
 
-    <p class="pub-year">Earlier</p>
+    <p class="pub-year">Earlier (Selected)</p>
     <ul class="pub-list">
       <li>
-        <span class="pub-title">[Ph.D. paper title]</span>
-        <span class="pub-meta">
-          <span class="me">A. J. [Name]</span>, [Advisor].
-          <em>[Journal]</em>, 20XX.
-        </span>
-        <div class="pub-links"><a href="#">DOI</a></div>
+        <span class="pub-title">Simple assembling process for polyimide aerogel and its application in water pollutants absorption</span>
+        <span class="pub-meta"><span class="me">Kim, J.</span>†, Kim, G.†, et al. <em>Journal of Porous Materials</em>, 29(3), 861–868. 2022.</span>
+      </li>
+      <li>
+        <span class="pub-title">Fabrication of highly flexible electromagnetic interference shielding polyimide carbon black composite</span>
+        <span class="pub-meta"><span class="me">Kim, J.</span>†, Kim, G.†, et al. <em>Composites Part B: Engineering</em>, 109010. 2021.</span>
+      </li>
+      <li>
+        <span class="pub-title">Tunable pore size and porosity of spherical polyimide aerogel by introducing swelling method</span>
+        <span class="pub-meta">Lee, D.†, <span class="me">Kim, J.</span>†, et al. <em>Microporous and Mesoporous Materials</em>, 288, 109546. 2019.</span>
+      </li>
+      <li>
+        <span class="pub-title">One-step synthesis of nano-porous monolithic polyimide aerogel</span>
+        <span class="pub-meta"><span class="me">Kim, J.</span>, Kwon, J., Lee, D., Kim, M., &amp; Han, H. <em>Microporous and Mesoporous Materials</em>, 234, 35–42. 2016.</span>
+      </li>
+      <li>
+        <span class="pub-title">Low-dielectric-constant polyimide aerogel composite films with low water uptake</span>
+        <span class="pub-meta"><span class="me">Kim, J.</span>, Kwon, J., Kim, M., Do, J., Lee, D., &amp; Han, H. <em>Polymer Journal</em>, 48(7), 829. 2016.</span>
       </li>
     </ul>
   </section>
@@ -463,10 +284,31 @@
     <div class="cv-block">
       <h3>Positions</h3>
       <div class="cv-row">
-        <span class="cv-year">20XX – present</span>
+        <span class="cv-year">2025 – present</span>
         <div class="cv-desc">
-          <strong>Postdoctoral Researcher</strong>
-          <span>Koros Group, School of Chemical &amp; Biomolecular Engineering, Georgia Tech</span>
+          <strong>Research Scientist II</strong>
+          <span>Department of Chemical Engineering, Georgia Tech</span>
+        </div>
+      </div>
+      <div class="cv-row">
+        <span class="cv-year">2023 – 2025</span>
+        <div class="cv-desc">
+          <strong>Postdoctoral Scholar</strong>
+          <span>Koros Group, Department of Chemical Engineering, Georgia Tech · Advisor: William J. Koros</span>
+        </div>
+      </div>
+      <div class="cv-row">
+        <span class="cv-year">2022 – 2023</span>
+        <div class="cv-desc">
+          <strong>Postdoctoral Scholar</strong>
+          <span>Materials Architecturing Research Center, KIST, Seoul · Advisor: Seung Sang Hwang, Albert S. Lee</span>
+        </div>
+      </div>
+      <div class="cv-row">
+        <span class="cv-year">2021 – 2022</span>
+        <div class="cv-desc">
+          <strong>Research Specialist</strong>
+          <span>CTO Research Division, LG Innotek, Seoul</span>
         </div>
       </div>
     </div>
@@ -474,50 +316,101 @@
     <div class="cv-block">
       <h3>Education</h3>
       <div class="cv-row">
-        <span class="cv-year">20XX – 20XX</span>
+        <span class="cv-year">2014 – 2021</span>
         <div class="cv-desc">
-          <strong>Ph.D., [Field]</strong>
-          <span>[University] · Advisor: [Name] · "[Thesis title]"</span>
+          <strong>Ph.D., Chemical &amp; Biomolecular Engineering</strong>
+          <span>Yonsei University, Seoul · Advisor: Haksoo Han · Thesis: "New Progress in Synthetic Technology of Porous Polyimide Aerogel and Sponge"</span>
         </div>
       </div>
       <div class="cv-row">
-        <span class="cv-year">20XX – 20XX</span>
+        <span class="cv-year">2010 – 2013</span>
         <div class="cv-desc">
-          <strong>B.S., [Field]</strong>
-          <span>[University]</span>
+          <strong>B.S., Chemical &amp; Biomolecular Engineering</strong>
+          <span>Yonsei University, Seoul · Advisor: Eunkyung Kim</span>
         </div>
       </div>
     </div>
 
     <div class="cv-block">
-      <h3>Selected Awards</h3>
+      <h3>Selected Awards &amp; Fellowships</h3>
       <div class="cv-row">
-        <span class="cv-year">20XX</span>
+        <span class="cv-year">2025</span>
         <div class="cv-desc">
-          <strong>[Award name]</strong>
-          <span>[기관]</span>
+          <strong>Shark Tank Award</strong>
+          <span>SEED Conference, Atlanta, GA</span>
         </div>
       </div>
       <div class="cv-row">
-        <span class="cv-year">20XX</span>
+        <span class="cv-year">2015 – 2020</span>
         <div class="cv-desc">
-          <strong>[Award name]</strong>
-          <span>[기관]</span>
+          <strong>Global Ph.D. Fellowship Grant</strong>
+          <span>National Research Foundation of Korea (NRF), Ministry of Education ($30,000/year)</span>
+        </div>
+      </div>
+      <div class="cv-row">
+        <span class="cv-year">2017</span>
+        <div class="cv-desc">
+          <strong>BK-21 Best Student Award</strong>
+          <span>Yonsei University</span>
+        </div>
+      </div>
+      <div class="cv-row">
+        <span class="cv-year">2017</span>
+        <div class="cv-desc">
+          <strong>Excellent Paper Award</strong>
+          <span>The Korean Hydrogen &amp; New Energy Society</span>
+        </div>
+      </div>
+      <div class="cv-row">
+        <span class="cv-year">2014 – 2015</span>
+        <div class="cv-desc">
+          <strong>Yonsei BK21 Plus Fellowship</strong>
+          <span>Yonsei University</span>
         </div>
       </div>
     </div>
 
-    <p class="cv-download"><a href="#">→ Download full CV (PDF)</a></p>
+    <div class="cv-block">
+      <h3>Patents</h3>
+      <div class="cv-row">
+        <span class="cv-year">2025</span>
+        <div class="cv-desc">
+          <strong>Method of Purifying Polysiloxane Composition</strong>
+          <span>Provisional Patent No. 63/888,197 · US (Applied)</span>
+        </div>
+      </div>
+      <div class="cv-row">
+        <span class="cv-year">2024</span>
+        <div class="cv-desc">
+          <strong>Resin composition and lighting device comprising same</strong>
+          <span>WO2024010371 · PCT (Granted)</span>
+        </div>
+      </div>
+      <div class="cv-row">
+        <span class="cv-year">2021</span>
+        <div class="cv-desc">
+          <strong>Nanoporous micro-spherical polyimide aerogels and method for preparing same</strong>
+          <span>US10,975,218 · US (Granted)</span>
+        </div>
+      </div>
+      <div class="cv-row">
+        <span class="cv-year">2019</span>
+        <div class="cv-desc">
+          <strong>Micro-pored Polyimide sponge and method for preparation of the same</strong>
+          <span>US10442894B2 · US (Granted)</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="cv-download"><a href="RESUME-JINYOUNGKIM_20260414.pdf" download>→ Download full CV (PDF)</a></p>
   </section>
 
-</div><!-- /page -->
+</div>
 
 <footer>
   <div class="foot-inner">
-    <span>© 2026 AJ [Your Name] · Georgia Institute of Technology</span>
-    <span>
-      <a href="mailto:you@gatech.edu">you@gatech.edu</a>
-    </span>
+    <span>© 2026 Jinyoung Kim · Georgia Institute of Technology</span>
+    <span><a href="mailto:jkim4046@gatech.edu">jkim4046@gatech.edu</a></span>
   </div>
 </footer>
 
