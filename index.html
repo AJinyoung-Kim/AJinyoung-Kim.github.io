@@ -14,7 +14,7 @@
     --line:   #ddd;
     --bg:     #ffffff;
     --accent: #c9831e;
-    --max:    860px;
+    --max:    1100px;
   }
   html { scroll-behavior: smooth; }
   body { font-family: Georgia, 'Times New Roman', serif; font-size: 15px; line-height: 1.75; color: var(--text); background: var(--bg); }
@@ -32,15 +32,15 @@
   /* PANELS */
   .panel { display: none; }
   .panel.active { display: block; }
-  .page { max-width: var(--max); margin: 0 auto; padding: 0 40px; padding-top: 56px; padding-bottom: 64px; }
+  .page { max-width: var(--max); margin: 0 auto; padding: 56px 60px 64px; }
   h2 { font-family: Georgia, serif; font-weight: bold; font-size: 1.15rem; margin-bottom: 22px; color: var(--text); letter-spacing: .02em; }
 
   /* ── HOME ── */
   .home-name-center { text-align: center; margin-bottom: 44px; }
   .home-name-center h1 { font-family: Georgia, serif; font-size: 2.2rem; font-weight: bold; color: var(--text); }
-  .home-grid { display: grid; grid-template-columns: 220px 1fr; gap: 48px; align-items: start; }
+  .home-grid { display: grid; grid-template-columns: 260px 1fr; gap: 60px; align-items: start; }
   .profile-col { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
-  .profile-photo { width: 220px; height: 275px; object-fit: cover; border-radius: 3px; border: 1px solid var(--line); background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: .75rem; color: var(--muted); text-align: center; }
+  .profile-photo { width: 260px; height: 325px; object-fit: cover; border-radius: 3px; border: 1px solid var(--line); background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: .75rem; color: var(--muted); text-align: center; }
   .profile-links { display: flex; flex-direction: column; gap: 6px; width: 100%; }
   .profile-links a { display: block; text-align: center; font-size: .82rem; padding: 7px 0; background: #1a3a5c; color: #fff; border-radius: 3px; font-family: Georgia, serif; }
   .profile-links a:hover { background: var(--accent); text-decoration: none; }
@@ -51,7 +51,7 @@
   /* POSITIONS / EDUCATION */
   .bio-table { margin-top: 24px; }
   .bio-table-title { font-size: .72rem; font-weight: bold; letter-spacing: .12em; text-transform: uppercase; color: var(--text); border-bottom: 1.5px solid var(--text); padding-bottom: 4px; margin-bottom: 2px; }
-  .bio-row { display: grid; grid-template-columns: 110px 1fr; gap: 8px; padding: 4px 0; border-bottom: 1px dashed var(--line); font-size: .83rem; line-height: 1.35; }
+  .bio-row { display: grid; grid-template-columns: 130px 1fr; gap: 16px; padding: 6px 0; border-bottom: 1px dashed var(--line); font-size: .83rem; line-height: 1.35; }
   .bio-row:last-child { border-bottom: none; }
   .bio-year { color: var(--muted); padding-top: 1px; }
   .bio-desc strong { font-weight: bold; }
@@ -148,28 +148,31 @@
       <p>My research aims to bridge fundamental materials science and practical engineering by translating new materials and separation concepts into scalable technologies for energy, environmental, and industrial applications.</p>
       <p>I currently lead the development of a novel CO₂ driven sorp-vection membrane separation process for selective purification of silicone oils, funded by The Dow Chemical Company. I work in the <a href="https://korosgroup.chbe.gatech.edu">Koros Group</a> at Georgia Tech in collaboration with Ryan Lively.</p>
 
-      <div class="bio-table" style="margin-top:28px;">
-        <p class="bio-table-title">Positions</p>
-        <div class="bio-row"><span class="bio-year">2025 – present</span><div class="bio-desc"><strong>Research Scientist II</strong><span>Dept. of Chemical Engineering, Georgia Tech</span></div></div>
-        <div class="bio-row"><span class="bio-year">2023 – 2025</span><div class="bio-desc"><strong>Postdoctoral Scholar</strong><span>Koros Group, Georgia Tech · Advisor: William J. Koros</span></div></div>
-        <div class="bio-row"><span class="bio-year">2022 – 2023</span><div class="bio-desc"><strong>Postdoctoral Scholar</strong><span>KIST, Seoul · Advisor: Seung Sang Hwang, Albert S. Lee</span></div></div>
-        <div class="bio-row"><span class="bio-year">2021 – 2022</span><div class="bio-desc"><strong>Research Specialist</strong><span>CTO Research Division, LG Innotek, Seoul</span></div></div>
-      </div>
-
-      <div class="bio-table" style="margin-top:14px;">
-        <p class="bio-table-title">Education</p>
-        <div class="bio-row"><span class="bio-year">2014 – 2021</span><div class="bio-desc"><strong>Ph.D., Chemical &amp; Biomolecular Engineering</strong><span>Yonsei University, Seoul · Advisor: Haksoo Han</span></div></div>
-        <div class="bio-row"><span class="bio-year">2010 – 2013</span><div class="bio-desc"><strong>B.S., Chemical &amp; Biomolecular Engineering</strong><span>Yonsei University, Seoul</span></div></div>
-      </div>
-
-      <div style="margin-top:32px; border-top:1px solid var(--line); padding-top:24px;">
-        <h2 style="margin-bottom:10px;">News</h2>
-        <ul class="news-list">
-          <li><span class="news-date">2026</span><span><span class="news-new">New —</span> Received GTNext Award ($5k) for module design and fabrication research.</span></li>
-        </ul>
-      </div>
     </div>
   </div>
+
+  <!-- EXPERIENCE / EDUCATION / NEWS — full width -->
+  <div class="bio-table" style="margin-top:48px;">
+    <p class="bio-table-title">Experience</p>
+    <div class="bio-row"><span class="bio-year">2025 – present</span><div class="bio-desc"><strong>Research Scientist II</strong><span>Dept. of Chemical Engineering, Georgia Tech</span></div></div>
+    <div class="bio-row"><span class="bio-year">2023 – 2025</span><div class="bio-desc"><strong>Postdoctoral Scholar</strong><span>Koros Group, Georgia Tech · Advisor: William J. Koros</span></div></div>
+    <div class="bio-row"><span class="bio-year">2022 – 2023</span><div class="bio-desc"><strong>Postdoctoral Scholar</strong><span>KIST, Seoul · Advisor: Seung Sang Hwang, Albert S. Lee</span></div></div>
+    <div class="bio-row"><span class="bio-year">2021 – 2022</span><div class="bio-desc"><strong>Research Specialist</strong><span>CTO Research Division, LG Innotek, Seoul</span></div></div>
+  </div>
+
+  <div class="bio-table" style="margin-top:20px;">
+    <p class="bio-table-title">Education</p>
+    <div class="bio-row"><span class="bio-year">2014 – 2021</span><div class="bio-desc"><strong>Ph.D., Chemical &amp; Biomolecular Engineering</strong><span>Yonsei University, Seoul · Advisor: Haksoo Han</span></div></div>
+    <div class="bio-row"><span class="bio-year">2010 – 2013</span><div class="bio-desc"><strong>B.S., Chemical &amp; Biomolecular Engineering</strong><span>Yonsei University, Seoul</span></div></div>
+  </div>
+
+  <div style="margin-top:28px; border-top:1px solid var(--line); padding-top:24px;">
+    <h2 style="margin-bottom:10px;">News</h2>
+    <ul class="news-list">
+      <li><span class="news-date">2026</span><span><span class="news-new">New —</span> Received GTNext Award ($5k) for module design and fabrication research.</span></li>
+    </ul>
+  </div>
+
 </div>
 </div>
 
