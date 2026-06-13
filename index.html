@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AJ [Your Name]</title>
+<meta name="description" content="Postdoctoral researcher at Georgia Tech working on membrane separations and sorp-vection transport theory.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --text:   #1a1a1a;
+    --muted:  #555;
+    --link:   #1a56a0;
+    --line:   #e0e0e0;
+    --bg:     #ffffff;
+    --accent: #c9831e;   /* amber — 멤브레인 polyimide 색, 딱 한 군데만 씀 */
+    --serif:  'Source Serif 4', Georgia, serif;
+    --sans:   'Inter', -apple-system, sans-serif;
+    --max:    780px;
+  }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    font-family: var(--sans);
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--bg);
+  }
+
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ── NAV ── */
+  nav {
+    border-bottom: 1px solid var(--line);
+    position: sticky; top: 0;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(4px);
+    z-index: 10;
+  }
+  .nav-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+  }
+  .nav-name {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text);
+  }
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+  }
+  .nav-links a {
+    font-size: .875rem;
+    color: var(--muted);
+    letter-spacing: .01em;
+  }
+  .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+  /* ── LAYOUT WRAPPER ── */
+  .page {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 56px 0;
+    border-top: 1px solid var(--line);
+  }
+  section:first-of-type { border-top: none; }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+
+  /* ── HOME / HERO ── */
+  #home {
+    padding: 52px 0 48px;
+    border-top: none;
+  }
+  .home-grid {
+    display: grid;
+    grid-template-columns: 168px 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+  .profile-photo {
+    width: 168px;
+    height: 210px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    background: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .75rem;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.4;
+  }
+  .home-text h1 {
+    font-family: var(--serif);
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .home-text .position {
+    color: var(--muted);
+    font-size: .9rem;
+    margin-bottom: 18px;
+  }
+  .home-text p {
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+  .home-links {
+    margin-top: 20px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .home-links a {
+    font-size: .875rem;
+  }
+  .home-links .sep {
+    color: var(--line);
+  }
+  /* accent — 딱 이름 아래 한 줄짜리 소속 구분선에만 */
+  .accent-rule {
+    width: 32px;
+    height: 2px;
+    background: var(--accent);
+    margin: 10px 0 16px;
+  }
+
+  /* ── NEWS ── */
+  .news-list {
+    list-style: none;
+  }
+  .news-list li {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: .9rem;
+  }
+  .news-list li:last-child { border-bottom: none; }
+  .news-date { color: var(--muted); font-size: .82rem; padding-top: 2px; }
+  .news-new { color: var(--accent); font-weight: 500; }
+
+  /* ── RESEARCH ── */
+  .research-item {
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+  }
+  .research-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .research-item h3 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+  .research-item p {
+    color: var(--muted);
+    font-size: .9rem;
+  }
+
+  /* ── PUBLICATIONS ── */
+  .pub-year {
+    font-size: .8rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin: 24px 0 8px;
+  }
+  .pub-year:first-child { margin-top: 0; }
+  .pub-list {
+    list-style: none;
+  }
+  .pub-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: .9rem;
+  }
+  .pub-list li:last-child { border-bottom: none; }
+  .pub-title { font-weight: 500; color: var(--text); display: block; margin-bottom: 3px; }
+  .pub-meta { color: var(--muted); }
+  .pub-meta em { font-style: italic; }
+  .pub-meta .me { color: var(--text); font-weight: 500; }
+  .pub-links { margin-top: 4px; display: flex; gap: 12px; }
+  .pub-links a { font-size: .8rem; }
+
+  /* ── CV ── */
+  .cv-block { margin-bottom: 32px; }
+  .cv-block h3 {
+    font-size: .8rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+  }
+  .cv-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 12px;
+    padding: 8px 0;
+    font-size: .9rem;
+    border-bottom: 1px dashed var(--line);
+  }
+  .cv-row:last-child { border-bottom: none; }
+  .cv-year { color: var(--muted); font-size: .82rem; padding-top: 2px; }
+  .cv-desc strong { font-weight: 500; }
+  .cv-desc span { display: block; color: var(--muted); font-size: .85rem; }
+  .cv-download {
+    margin-top: 20px;
+    font-size: .875rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 28px 0;
+    font-size: .82rem;
+    color: var(--muted);
+  }
+  footer .foot-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  footer a { color: var(--muted); }
+  footer a:hover { color: var(--text); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .home-grid { grid-template-columns: 1fr; }
+    .profile-photo { width: 140px; height: 175px; }
+    .nav-links { gap: 16px; }
+    .cv-row { grid-template-columns: 1fr; gap: 2px; }
+    .news-list li { grid-template-columns: 1fr; gap: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-name">AJ [Your Name]</span>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#cv">CV</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- HOME -->
+  <section id="home">
+    <div class="home-grid">
+
+      <!-- 사진: 업로드 후 아래 div를 <img class="profile-photo" src="photo.jpg" alt="AJ"> 로 교체 -->
+      <div class="profile-photo">Photo<br>600 × 750 px</div>
+
+      <div class="home-text">
+        <h1>AJ [Your Name]</h1>
+        <div class="accent-rule"></div>
+        <p class="position">Postdoctoral Researcher · Koros Group · Georgia Institute of Technology</p>
+
+        <p>
+          Welcome! I am a membrane scientist developing transport theory and hollow fiber
+          membrane platforms for energy-efficient gas separations. My work focuses on
+          <strong>sorp-vection</strong> — a hybrid transport mode that couples liquid-phase
+          sorption with convective carrier gas sweep — and on translating this understanding
+          into scalable membrane modules.
+          <!-- [한 문단 자기소개로 다듬기] -->
+        </p>
+        <p>
+          I completed my Ph.D. at [University] and am currently a postdoc in the
+          <a href="https://korosgroup.chbe.gatech.edu">Koros Group</a> at Georgia Tech,
+          supported in part by the GTNext fund.
+          <!-- [경력 한 줄] -->
+        </p>
+
+        <div class="home-links">
+          <a href="mailto:you@gatech.edu">you@gatech.edu</a>
+          <span class="sep">·</span>
+          <a href="#">Google Scholar</a>
+          <span class="sep">·</span>
+          <a href="#">CV (PDF)</a>
+          <span class="sep">·</span>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- NEWS -->
+  <section id="news">
+    <h2>News</h2>
+    <ul class="news-list">
+      <li>
+        <span class="news-date">Jun 2026</span>
+        <span><span class="news-new">New —</span> [소식: 논문 제출, 수상, 발표 등]</span>
+      </li>
+      <li>
+        <span class="news-date">May 2026</span>
+        <span>Presented at [Conference, City]. <!-- [교체] --></span>
+      </li>
+      <li>
+        <span class="news-date">Mar 2026</span>
+        <span>[소식]</span>
+      </li>
+      <li>
+        <span class="news-date">Jan 2026</span>
+        <span>[소식]</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <h2>Research</h2>
+
+    <div class="research-item">
+      <h3>Sorp-vection transport theory</h3>
+      <p>
+        Extending the Damle–Koros framework by incorporating liquid-phase carrier gas
+        solubility into the sorp-vection driving force. This reframes carrier gas selection
+        (CO₂, N₂, Xe, SF₆) as a tunable design variable rather than a passive choice,
+        opening new parametric space for module optimization.
+        <!-- [수정] -->
+      </p>
+    </div>
+
+    <div class="research-item">
+      <h3>PDMS hollow fiber platforms &amp; module scale-up</h3>
+      <p>
+        Parametric studies of PDMS selective layer thickness, fiber count, and carrier gas
+        selection for sorp-vection modules. Ongoing work on diagnosing and resolving
+        performance changes during scale-up from lab to larger module configurations.
+        <!-- [수정] -->
+      </p>
+    </div>
+
+    <div class="research-item">
+      <h3>Surface modification of PDMS membranes</h3>
+      <p>
+        Plasma and chemical routes to introduce polar functionality onto PDMS surfaces,
+        characterized by FTIR and XPS. Exploring masking strategies (PVA sacrificial
+        lift-off) for selective coating of hollow fiber lumen surfaces.
+        <!-- [수정] -->
+      </p>
+    </div>
+
+    <div class="research-item">
+      <h3>Carbon molecular sieve (CMS) hollow fibers</h3>
+      <p>
+        Precursor chemistry and pyrolysis protocols for CMS hollow fibers derived from
+        novel polyimide dianhydrides. Work includes fiber coating and blocking-risk
+        mitigation prior to high-temperature treatment.
+        <!-- [수정] -->
+      </p>
+    </div>
+
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <h2>Publications</h2>
+    <p style="font-size:.875rem; color:var(--muted); margin-bottom:20px;">
+      Full list on <a href="#">Google Scholar</a> and <a href="#">ORCID</a>.
+      My name is shown in <strong style="color:var(--text)">bold</strong>.
+    </p>
+
+    <p class="pub-year">2026</p>
+    <ul class="pub-list">
+      <li>
+        <span class="pub-title">[Paper title — sorp-vection driving force framework]</span>
+        <span class="pub-meta">
+          <span class="me">A. J. [Name]</span>, W. J. Koros.
+          <em>Journal of Membrane Science</em>, 2026.
+        </span>
+        <div class="pub-links"><a href="#">DOI</a><a href="#">PDF</a></div>
+      </li>
+      <li>
+        <span class="pub-title">[Paper title]</span>
+        <span class="pub-meta">
+          [Authors], <span class="me">A. J. [Name]</span>.
+          <em>[Journal]</em>, 2026.
+        </span>
+        <div class="pub-links"><a href="#">DOI</a></div>
+      </li>
+    </ul>
+
+    <p class="pub-year">2025</p>
+    <ul class="pub-list">
+      <li>
+        <span class="pub-title">[Paper title]</span>
+        <span class="pub-meta">
+          <span class="me">A. J. [Name]</span>, [Authors].
+          <em>[Journal]</em>, 2025.
+        </span>
+        <div class="pub-links"><a href="#">DOI</a><a href="#">PDF</a></div>
+      </li>
+    </ul>
+
+    <p class="pub-year">Earlier</p>
+    <ul class="pub-list">
+      <li>
+        <span class="pub-title">[Ph.D. paper title]</span>
+        <span class="pub-meta">
+          <span class="me">A. J. [Name]</span>, [Advisor].
+          <em>[Journal]</em>, 20XX.
+        </span>
+        <div class="pub-links"><a href="#">DOI</a></div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- CV -->
+  <section id="cv">
+    <h2>CV</h2>
+
+    <div class="cv-block">
+      <h3>Positions</h3>
+      <div class="cv-row">
+        <span class="cv-year">20XX – present</span>
+        <div class="cv-desc">
+          <strong>Postdoctoral Researcher</strong>
+          <span>Koros Group, School of Chemical &amp; Biomolecular Engineering, Georgia Tech</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cv-block">
+      <h3>Education</h3>
+      <div class="cv-row">
+        <span class="cv-year">20XX – 20XX</span>
+        <div class="cv-desc">
+          <strong>Ph.D., [Field]</strong>
+          <span>[University] · Advisor: [Name] · "[Thesis title]"</span>
+        </div>
+      </div>
+      <div class="cv-row">
+        <span class="cv-year">20XX – 20XX</span>
+        <div class="cv-desc">
+          <strong>B.S., [Field]</strong>
+          <span>[University]</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cv-block">
+      <h3>Selected Awards</h3>
+      <div class="cv-row">
+        <span class="cv-year">20XX</span>
+        <div class="cv-desc">
+          <strong>[Award name]</strong>
+          <span>[기관]</span>
+        </div>
+      </div>
+      <div class="cv-row">
+        <span class="cv-year">20XX</span>
+        <div class="cv-desc">
+          <strong>[Award name]</strong>
+          <span>[기관]</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="cv-download"><a href="#">→ Download full CV (PDF)</a></p>
+  </section>
+
+</div><!-- /page -->
+
+<footer>
+  <div class="foot-inner">
+    <span>© 2026 AJ [Your Name] · Georgia Institute of Technology</span>
+    <span>
+      <a href="mailto:you@gatech.edu">you@gatech.edu</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>
