@@ -120,6 +120,7 @@
     <span class="nav-name" onclick="show('home')">Jinyoung Kim</span>
     <ul class="nav-links">
       <li><a id="nav-home" onclick="show('home')">Home</a></li>
+      <li><a id="nav-news" onclick="show('news')">News</a></li>
       <li><a id="nav-research" onclick="show('research')">Research</a></li>
       <li><a id="nav-publications" onclick="show('publications')">Publications</a></li>
       <li><a id="nav-cv" onclick="show('cv')">CV</a></li>
@@ -173,6 +174,105 @@
     </ul>
   </div>
 
+</div>
+</div>
+
+<!-- ══════════ NEWS ══════════ -->
+<div id="panel-news" class="panel">
+<div class="page">
+  <h2>News</h2>
+
+  <div class="news-list" style="list-style:none;">
+
+    <div style="padding:14px 0; border-bottom:1px solid var(--line);">
+      <div style="display:grid; grid-template-columns:110px 1fr; gap:16px;">
+        <span style="font-size:.82rem; color:var(--muted); padding-top:2px;">Jul 2026</span>
+        <div>
+          <span style="color:var(--accent); font-weight:bold;">Upcoming — </span>
+          Presenting at <strong>ICOM 2026</strong> (International Congress on Membranes and Membrane Processes), July 18–24, 2026.
+          <div style="margin-top:6px; font-size:.88rem; color:var(--muted);">
+            <div>• <strong>Poster:</strong> Mitigation of Concentration Polarization In Sorp-Vection Systems</div>
+            <div>• <strong>Oral:</strong> High-Pressure Sorp-Vection Module Fabrication</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:14px 0; border-bottom:1px solid var(--line);">
+      <div style="display:grid; grid-template-columns:110px 1fr; gap:16px;">
+        <span style="font-size:.82rem; color:var(--muted); padding-top:2px;">2026</span>
+        <div>
+          <span style="color:var(--accent); font-weight:bold;">New — </span>
+          Received <strong>GTNext Award ($5,000)</strong> for module design and fabrication research, Georgia Tech.
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:14px 0; border-bottom:1px solid var(--line);">
+      <div style="display:grid; grid-template-columns:110px 1fr; gap:16px;">
+        <span style="font-size:.82rem; color:var(--muted); padding-top:2px;">Nov 2025</span>
+        <div>
+          Presented at <strong>AIChE Annual Meeting</strong>, Boston, MA.
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:14px 0; border-bottom:1px solid var(--line);">
+      <div style="display:grid; grid-template-columns:110px 1fr; gap:16px;">
+        <span style="font-size:.82rem; color:var(--muted); padding-top:2px;">Aug 2025</span>
+        <div>
+          Received <strong>Shark Tank Award</strong> at 2025 SEED Conference (Scientists and Engineers Early Career Development Workshop), Atlanta, GA.
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:14px 0; border-bottom:1px solid var(--line);">
+      <div style="display:grid; grid-template-columns:110px 1fr; gap:16px;">
+        <span style="font-size:.82rem; color:var(--muted); padding-top:2px;">May 2025</span>
+        <div>
+          Presented at <strong>North American Membrane Society (NAMS) Annual Meeting</strong>, Nashville, TN.
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:14px 0; border-bottom:1px solid var(--line);">
+      <div style="display:grid; grid-template-columns:110px 1fr; gap:16px;">
+        <span style="font-size:.82rem; color:var(--muted); padding-top:2px;">Apr 2025</span>
+        <div>
+          Presented at <strong>GT × UGA Networking Seminar</strong>, Atlanta, GA.
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:14px 0; border-bottom:1px solid var(--line);">
+      <div style="display:grid; grid-template-columns:110px 1fr; gap:16px;">
+        <span style="font-size:.82rem; color:var(--muted); padding-top:2px;">2025</span>
+        <div>
+          Paper published in <strong><em>Angewandte Chemie</em></strong>: "Sorp-Vection-Based Membrane Silicone Oil Purification."
+          <a href="https://doi.org/10.1002/anie.202516848" target="_blank" style="font-size:.82rem; margin-left:6px;">DOI</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:14px 0; border-bottom:1px solid var(--line);">
+      <div style="display:grid; grid-template-columns:110px 1fr; gap:16px;">
+        <span style="font-size:.82rem; color:var(--muted); padding-top:2px;">2025</span>
+        <div>
+          Joined <strong>Koros Group</strong> at Georgia Tech as Research Scientist II.
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:14px 0;">
+      <div style="display:grid; grid-template-columns:110px 1fr; gap:16px;">
+        <span style="font-size:.82rem; color:var(--muted); padding-top:2px;">2024</span>
+        <div>
+          Paper published in <strong><em>Journal of Membrane Science</em></strong>: "Insights on influence of polymer molecular weight on gas sorption, transport and plasticization in glassy 6FDA-DAM polyimide membranes."
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
 </div>
 
@@ -309,7 +409,7 @@
 
 <script>
   function show(tab) {
-    ['home','research','publications','cv'].forEach(t => {
+    ['home','news','research','publications','cv'].forEach(t => {
       document.getElementById('panel-' + t).classList.toggle('active', t === tab);
       document.getElementById('nav-' + t).classList.toggle('active', t === tab);
     });
