@@ -14,7 +14,7 @@
 <body>
 <div id="root"></div>
 <script type="text/babel" data-presets="react">
-const { useState, useRef, useMemo } = React;
+const { useState, useRef, useMemo, useEffect } = React;
 
 /* ================= Data processing ================= */
 
@@ -346,6 +346,34 @@ function TGAPlotter() {
     if (fileRef.current) fileRef.current.value = "";
   };
 
+  // Load the bundled sample dataset (sample.xlsx next to this page)
+  const loadSample = async () => {
+    setErr("");
+    for (const f of ["sample.xlsx", "sample.xls", "sample.csv"]) {
+      try {
+        const res = await fetch(f);
+        if (!res.ok) continue;
+        const buf = await res.arrayBuffer();
+        const raw = parseWorkbook(buf);
+        if (raw.length < 10) continue;
+        const id = ++idRef.current;
+        setSets((s) => [...s, {
+          id, raw, name: "Sample",
+          color: PALETTE[s.length % PALETTE.length],
+          visible: true,
+          proc: processDataset(raw, opts.startTemp, opts.refOffset),
+        }]);
+        return;
+      } catch (e) {}
+    }
+    setErr("Sample data could not be loaded.");
+  };
+
+  // open with ?sample to auto-load the sample dataset (e.g. tga-plotter.html?sample=1)
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).has("sample")) loadSample();
+  }, []);
+
   const setStartTemp = (v) => {
     const t = Number(v);
     if (!Number.isFinite(t)) return;
@@ -531,6 +559,11 @@ function TGAPlotter() {
                 onDrop={(e) => { e.preventDefault(); handleFiles(e.dataTransfer.files); }}>
                 <div style={{ fontSize: 15, fontWeight: "bold", marginBottom: 6 }}>Drag & drop Excel files here, or click to upload</div>
                 <div style={S.small}>.xlsx / .csv · Column A = Temperature (°C), Column B = Mass · multiple files supported</div>
+                <button
+                  onClick={(e) => { e.stopPropagation(); loadSample(); }}
+                  style={{ marginTop: 14, fontFamily: "inherit", fontSize: 13, padding: "7px 16px", border: "1px solid #33699a", background: "#fff", color: "#33699a", borderRadius: 3, cursor: "pointer" }}>
+                  No data handy? Try with sample data
+                </button>
               </div>
             ) : (
               <>
