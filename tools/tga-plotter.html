@@ -546,7 +546,14 @@ function TGAPlotter() {
   return (
     <div style={S.page}>
       <div style={S.shell}>
-        <h1 style={S.h1}>TGA Plot Generator</h1>
+        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
+          <h1 style={S.h1}>TGA Plot Generator</h1>
+          <div style={{ fontSize: 13, color: "#555" }}>
+            by <a href="https://ajinyoung-kim.github.io" target="_blank" style={{ color: "#33699a", fontWeight: "bold" }}>Jinyoung Kim</a>
+            {" · "}
+            <a href="https://ajinyoung-kim.github.io/#tools" target="_blank" style={{ color: "#33699a" }}>More tools →</a>
+          </div>
+        </div>
         <p style={S.sub}>Upload Excel → normalize to 100% at the {opts.startTemp}°C stabilization point → auto-mark Td5% / Td10% / residue</p>
 
         <div style={S.grid}>
