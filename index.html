@@ -500,16 +500,37 @@
 </footer>
 
 <script>
+  const TABS = ['home','news','research','tools','publications','cv'];
+
+  let pageviewCounted = false; // first pageview is counted by count.js itself
+
   function show(tab) {
-    ['home','news','research','tools','publications','cv'].forEach(t => {
+    TABS.forEach(t => {
       document.getElementById('panel-' + t).classList.toggle('active', t === tab);
       document.getElementById('nav-' + t).classList.toggle('active', t === tab);
     });
+    // keep the URL in sync so each tab is shareable (e.g. /#tools)
+    const target = tab === 'home' ? location.pathname + location.search : '#' + tab;
+    if (history.replaceState) history.replaceState(null, '', target);
+    // count tab switches as pageviews so the dashboard shows per-tab visits
+    if (pageviewCounted && window.goatcounter && window.goatcounter.count) {
+      window.goatcounter.count({ path: tab === 'home' ? '/' : '/#' + tab });
+    }
     window.scrollTo(0, 0);
   }
-  // 초기 active 표시
-  document.getElementById('nav-home').classList.add('active');
+
+  function tabFromHash() {
+    const h = location.hash.replace('#', '');
+    return TABS.includes(h) ? h : 'home';
+  }
+
+  // open the tab from the URL on load, and follow back/forward navigation
+  show(tabFromHash());
+  pageviewCounted = true;
+  window.addEventListener('hashchange', () => show(tabFromHash()));
 </script>
+
+<script data-goatcounter="https://flycorea.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
 </body>
 </html>
