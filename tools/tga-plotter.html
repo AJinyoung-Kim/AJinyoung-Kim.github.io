@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TGA Plot Generator</title>
+<meta name="description" content="Upload TGA Excel data, auto-normalize to 100% after stabilization, and export publication-ready plots with Td5%, Td10%, and residue annotations.">
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>html,body{margin:0;padding:0}</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+const { useState, useRef, useMemo } = React;
+
+/* ================= Data processing ================= */
+
+const PALETTE = ["#E60012", "#0033CC", "#CC00CC", "#009933", "#FF8800", "#009999", "#663399", "#996600"];
+
+// Parse xlsx/csv -> [{T, m}], col A = temperature, col B = mass
+function parseWorkbook(arrayBuffer) {
+  const wb = XLSX.read(arrayBuffer, { type: "array" });
+  const ws = wb.Sheets[wb.SheetNames[0]];
+  const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
+  const pts = [];
+  for (const r of rows) {
+    const T = Number(r?.[0]);
+    const m = Number(r?.[1]);
+    if (Number.isFinite(T) && Number.isFinite(m) && m > 0) pts.push({ T, m });
+  }
+  return pts;
+}
+
+// Find ramp start: last point at/below (startTemp + tol) BEFORE the max-temperature point.
+// This skips the initial water-drying / equilibration segment.
+function findStartIndex(pts, startTemp, tol = 2) {
+  if (pts.length < 3) return 0;
+  let maxIdx = 0;
+  for (let i = 1; i < pts.length; i++) if (pts[i].T > pts[maxIdx].T) maxIdx = i;
+  let start = -1;
+  for (let i = 0; i <= maxIdx; i++) {
+    if (pts[i].T <= startTemp + tol) start = i;
+  }
+  return start >= 0 ? start : 0;
+}
+
+// Normalize so weight = 100% at a reference point slightly AFTER stabilization
+// (refOffset °C past startTemp, default +20 → ~50°C). Points before the
+// reference are clamped to ≤100 so the 30–~50°C region stays flat instead of
+// showing residual moisture drift.
+function processDataset(pts, startTemp, refOffset = 20) {
+  const s = findStartIndex(pts, startTemp);
+  let maxIdx = s;
+  for (let i = s; i < pts.length; i++) if (pts[i].T >= pts[maxIdx].T) maxIdx = i;
+  // reference point: first point at/after startTemp + refOffset
+  let refIdx = s;
+  for (let i = s; i <= maxIdx; i++) {
+    if (pts[i].T >= startTemp + refOffset) { refIdx = i; break; }
+    refIdx = i;
+  }
+  const refT = pts[refIdx].T;
+  const m0 = pts[refIdx].m;
+  const seg = [];
+  let lastT = -Infinity;
+  for (let i = s; i <= maxIdx; i++) {
+    if (pts[i].T >= lastT) {
+      let w = (pts[i].m / m0) * 100;
+      if (pts[i].T <= refT) w = Math.min(w, 100); // flat 100% before reference
+      seg.push({ T: pts[i].T, w });
+      lastT = pts[i].T;
+    }
+  }
+  // downsample for rendering
+  const MAXPTS = 1200;
+  let plot = seg;
+  if (seg.length > MAXPTS) {
+    const step = Math.ceil(seg.length / MAXPTS);
+    plot = seg.filter((_, i) => i % step === 0);
+    if (plot[plot.length - 1] !== seg[seg.length - 1]) plot.push(seg[seg.length - 1]);
+  }
+  const td = (loss) => {
+    const th = 100 - loss;
+    for (let i = 1; i < seg.length; i++) {
+      if (seg[i].w <= th && seg[i - 1].w > th) {
+        const a = seg[i - 1], b = seg[i];
+        const f = (a.w - th) / (a.w - b.w);
+        return a.T + f * (b.T - a.T);
+      }
+    }
+    return null;
+  };
+  return {
+    data: plot,
+    full: seg, // full-resolution processed data (for Excel export)
+    td5: td(5),
+    td10: td(10),
+    residue: seg[seg.length - 1].w,
+    tMax: seg[seg.length - 1].T,
+    startT: pts[s].T,
+    refT,
+    nRaw: pts.length,
+  };
+}
+
+/* ================= Chart (publication-style SVG) ================= */
+
+function niceCeil(v, step) { return Math.ceil(v / step) * step; }
+
+function Chart({ sets, opts, svgRef }) {
+  const W = 760, H = 540;
+  const M = { l: 82, r: 96, t: 24, b: 66 };
+  const pw = W - M.l - M.r, ph = H - M.t - M.b;
+
+  const visible = sets.filter((d) => d.visible);
+  const xMin = opts.startTemp;
+  const dataMax = Math.max(100, ...visible.map((d) => d.proc.tMax));
+  const xMax = opts.xMaxAuto ? niceCeil(dataMax, 100) : opts.xMax;
+  const yMin = 0, yMax = 100;
+
+  const X = (t) => M.l + ((t - xMin) / (xMax - xMin)) * pw;
+  const Y = (w) => M.t + ((yMax - Math.min(Math.max(w, yMin), 104)) / (yMax - yMin)) * ph;
+
+  const xTicks = [];
+  const xStep = xMax - xMin > 600 ? 200 : 100;
+  for (let t = niceCeil(xMin, xStep); t <= xMax; t += xStep) xTicks.push(t);
+  const yTicks = [0, 20, 40, 60, 80, 100];
+
+  const F = "Arial, Helvetica, sans-serif";
+
+  /* ---- label layout: compute positions first, nudge to avoid overlaps ---- */
+  const lfs = 12, lh = 16; // Td label font size / line height
+
+  // legend geometry (rendered last, but used as an obstacle for Td labels)
+  const legend = (() => {
+    if (!visible.length) return null;
+    const fs = 13, rowH = 20, pad = 9, lineLen = 28;
+    const longest = Math.max(...visible.map((d) => d.name.length), 1);
+    const boxW = Math.min(pad + lineLen + 7 + longest * fs * 0.58 + pad, pw - 24);
+    const boxH = visible.length * rowH + pad * 2 - 6;
+    return { x: M.l + pw - boxW - 12, y: M.t + 12, w: boxW, h: boxH, fs, rowH, pad, lineLen };
+  })();
+
+  /* shared obstacle system: legend box + placed labels + the curves themselves */
+  const obstacles = legend ? [{ x: legend.x, y: legend.y, w: legend.w, h: legend.h }] : [];
+  const boxHit = (a, b) => a.x < b.x + b.w + 3 && b.x < a.x + a.w + 3 && a.y < b.y + b.h + 2 && b.y < a.y + a.h + 2;
+  const curvePts = [];
+  for (const d of visible) {
+    const pts = d.proc.data;
+    const step = Math.max(1, Math.floor(pts.length / 600));
+    for (let i = 0; i < pts.length; i += step) {
+      const p = pts[i];
+      if (p.T >= xMin && p.T <= xMax) curvePts.push({ x: X(p.T), y: Y(p.w) });
+    }
+  }
+  const hitsCurve = (b) => {
+    for (let i = 0; i < curvePts.length; i++) {
+      const p = curvePts[i];
+      if (p.x > b.x - 3 && p.x < b.x + b.w + 3 && p.y > b.y - 2 && p.y < b.y + b.h + 2) return true;
+    }
+    return false;
+  };
+  const blocked = (b) => obstacles.some((o) => boxHit(o, b)) || hitsCurve(b);
+  // Nudge a label box vertically (preferred direction first, then the other
+  // way) until it clears every curve, label, and the legend.
+  const place = (x, defTop, w, h, dir) => {
+    let box = { x, y: defTop, w, h };
+    let d = dir, flipped = false, guard = 0;
+    while (blocked(box) && guard++ < 90) {
+      box.y += d * (h * 0.6);
+      if (box.y < M.t + 2 || box.y + h > M.t + ph - 2) {
+        if (flipped) { box.y = Math.min(Math.max(box.y, M.t + 2), M.t + ph - h - 2); break; }
+        flipped = true; d = -d; box.y = defTop + d * h;
+      }
+    }
+    obstacles.push(box);
+    return box.y;
+  };
+
+  const tdLabels = [];
+  if (opts.tdLabels) {
+    for (const d of visible) {
+      if (opts.showTd5 && d.proc.td5 != null && d.proc.td5 <= xMax) {
+        const text = `Td5% ${d.proc.td5.toFixed(0)}°C`;
+        const w = text.length * lfs * 0.56;
+        const ax = X(d.proc.td5), ay = Y(95), defTop = ay - 19;
+        const top = place(ax + 7, defTop, w, lh, -1);
+        tdLabels.push({ key: d.id + "-5", text, color: d.color, x: ax + 7, y: top + 12, ax, ay, moved: Math.abs(top - defTop) > 1 });
+      }
+      if (opts.showTd10 && d.proc.td10 != null && d.proc.td10 <= xMax) {
+        const text = `Td10% ${d.proc.td10.toFixed(0)}°C`;
+        const w = text.length * lfs * 0.56;
+        const ax = X(d.proc.td10), ay = Y(90), defTop = ay + 4;
+        const top = place(ax + 7, defTop, w, lh, 1);
+        tdLabels.push({ key: d.id + "-10", text, color: d.color, x: ax + 7, y: top + 12, ax, ay, moved: Math.abs(top - defTop) > 1 });
+      }
+    }
+  }
+
+  // residue labels share the same obstacle system, so they dodge curves,
+  // Td labels, the legend, and each other
+  const residueLabels = (() => {
+    if (!opts.showResidue) return [];
+    const fs = 13, h = 15;
+    return visible
+      .map((d) => {
+        const last = d.proc.data[d.proc.data.length - 1];
+        if (!last) return null;
+        const ax = X(Math.min(last.T, xMax)), ay = Y(last.w);
+        const text = `${d.proc.residue.toFixed(1)}%`;
+        const w = text.length * fs * 0.6;
+        const defTop = ay - 8;
+        const top = place(ax + 8, defTop, w, h, d.proc.residue < 50 ? -1 : 1);
+        return { key: "r" + d.id, color: d.color, text, x: ax + 8, y: top + 11, ax, ay, moved: Math.abs(top - defTop) > 2 };
+      })
+      .filter(Boolean);
+  })();
+
+  return (
+    <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} width="100%" style={{ background: "#fff", display: "block" }}>
+      {/* grid */}
+      {opts.grid && (
+        <g stroke="#d8d8d8" strokeWidth="1" strokeDasharray="3 4">
+          {xTicks.map((t) => <line key={"gx" + t} x1={X(t)} x2={X(t)} y1={M.t} y2={M.t + ph} />)}
+          {yTicks.map((v) => <line key={"gy" + v} x1={M.l} x2={M.l + pw} y1={Y(v)} y2={Y(v)} />)}
+        </g>
+      )}
+
+      {/* curves */}
+      {visible.map((d) => {
+        const path = d.proc.data
+          .filter((p) => p.T >= xMin && p.T <= xMax)
+          .map((p, i) => `${i === 0 ? "M" : "L"}${X(p.T).toFixed(2)},${Y(p.w).toFixed(2)}`)
+          .join("");
+        return <path key={d.id} d={path} fill="none" stroke={d.color} strokeWidth={opts.lineWidth} strokeLinejoin="round" />;
+      })}
+
+      {/* Td markers (labels rendered separately with overlap avoidance) */}
+      {visible.map((d) => (
+        <g key={"td" + d.id}>
+          {opts.showTd5 && d.proc.td5 != null && d.proc.td5 <= xMax && (
+            <g>
+              <line x1={X(d.proc.td5)} x2={X(d.proc.td5)} y1={Y(95)} y2={M.t + ph} stroke={d.color} strokeWidth="1" strokeDasharray="4 4" opacity="0.55" />
+              <circle cx={X(d.proc.td5)} cy={Y(95)} r="4.5" fill="#fff" stroke={d.color} strokeWidth="2" />
+            </g>
+          )}
+          {opts.showTd10 && d.proc.td10 != null && d.proc.td10 <= xMax && (
+            <g>
+              <line x1={X(d.proc.td10)} x2={X(d.proc.td10)} y1={Y(90)} y2={M.t + ph} stroke={d.color} strokeWidth="1" strokeDasharray="2 5" opacity="0.55" />
+              <rect x={X(d.proc.td10) - 4} y={Y(90) - 4} width="8" height="8" fill="#fff" stroke={d.color} strokeWidth="2" />
+            </g>
+          )}
+        </g>
+      ))}
+      {tdLabels.map((l) => (
+        <g key={l.key} fontFamily={F} fontSize={lfs}>
+          {l.moved && <line x1={l.ax} y1={l.ay} x2={l.x - 1} y2={l.y - 4} stroke={l.color} strokeWidth="1" opacity="0.5" />}
+          <text x={l.x} y={l.y} fill={l.color} fontWeight="bold">{l.text}</text>
+        </g>
+      ))}
+
+      {/* residue labels at right end (stacked so they never overlap) */}
+      {residueLabels.map((l) => (
+        <g key={l.key} fontFamily={F} fontSize="13">
+          {l.moved && <line x1={l.ax} y1={l.ay} x2={l.x + 1} y2={l.y - 4} stroke={l.color} strokeWidth="1" opacity="0.5" />}
+          <text x={l.x} y={l.y} fontWeight="bold" fill={l.color}>{l.text}</text>
+        </g>
+      ))}
+
+      {/* axes box */}
+      <rect x={M.l} y={M.t} width={pw} height={ph} fill="none" stroke="#000" strokeWidth="1.6" />
+      {/* ticks */}
+      <g stroke="#000" strokeWidth="1.4">
+        {xTicks.map((t) => <line key={"tx" + t} x1={X(t)} x2={X(t)} y1={M.t + ph} y2={M.t + ph - 7} />)}
+        {yTicks.map((v) => <line key={"ty" + v} x1={M.l} x2={M.l + 7} y1={Y(v)} y2={Y(v)} />)}
+      </g>
+      {/* tick labels */}
+      <g fontFamily={F} fontSize="15" fill="#000">
+        {xTicks.map((t) => <text key={"lx" + t} x={X(t)} y={M.t + ph + 22} textAnchor="middle">{t}</text>)}
+        {yTicks.map((v) => <text key={"ly" + v} x={M.l - 11} y={Y(v) + 5} textAnchor="end">{v}</text>)}
+      </g>
+      {/* axis titles */}
+      <text x={M.l + pw / 2} y={H - 16} textAnchor="middle" fontFamily={F} fontSize="18" fontWeight="bold">Temperature (°C)</text>
+      <text x={24} y={M.t + ph / 2} textAnchor="middle" fontFamily={F} fontSize="18" fontWeight="bold"
+        transform={`rotate(-90 24 ${M.t + ph / 2})`}>Weight Ratio (%)</text>
+
+      {/* legend (top-right, box auto-sized; geometry computed above) */}
+      {legend && (
+        <g fontFamily={F} fontSize={legend.fs}>
+          <rect x={legend.x} y={legend.y} width={legend.w} height={legend.h} fill="#fff" stroke="#000" strokeWidth="1" opacity="0.92" />
+          {visible.map((d, i) => {
+            const yy = legend.y + legend.pad + i * legend.rowH + 10;
+            return (
+              <g key={"lg" + d.id}>
+                <line x1={legend.x + legend.pad} x2={legend.x + legend.pad + legend.lineLen} y1={yy - 4} y2={yy - 4} stroke={d.color} strokeWidth={opts.lineWidth} />
+                <text x={legend.x + legend.pad + legend.lineLen + 7} y={yy} fill="#000">{d.name}</text>
+              </g>
+            );
+          })}
+        </g>
+      )}
+    </svg>
+  );
+}
+
+/* ================= App ================= */
+
+function TGAPlotter() {
+  const [sets, setSets] = useState([]);
+  const [opts, setOpts] = useState({
+    startTemp: 30, refOffset: 20, grid: false, showTd5: true, showTd10: true, tdLabels: true,
+    showResidue: true, lineWidth: 2.2, xMaxAuto: true, xMax: 800,
+  });
+  const [err, setErr] = useState("");
+  const fileRef = useRef(null);
+  const svgRef = useRef(null);
+  const idRef = useRef(0);
+
+  const reprocessAll = (startTemp, refOffset) =>
+    setSets((s) => s.map((d) => ({ ...d, proc: processDataset(d.raw, startTemp, refOffset) })));
+
+  const handleFiles = async (fileList) => {
+    setErr("");
+    const files = Array.from(fileList || []);
+    const added = [];
+    for (const f of files) {
+      try {
+        const buf = await f.arrayBuffer();
+        const raw = parseWorkbook(buf);
+        if (raw.length < 10) throw new Error("No numeric data found (check: Column A = temperature, Column B = mass)");
+        const id = ++idRef.current;
+        added.push({
+          id, raw,
+          name: f.name.replace(/\.(xlsx|xls|csv|txt)$/i, ""),
+          color: PALETTE[(sets.length + added.length) % PALETTE.length],
+          visible: true,
+          proc: processDataset(raw, opts.startTemp, opts.refOffset),
+        });
+      } catch (e) {
+        setErr(`${f.name}: ${e.message}`);
+      }
+    }
+    if (added.length) setSets((s) => [...s, ...added]);
+    if (fileRef.current) fileRef.current.value = "";
+  };
+
+  const setStartTemp = (v) => {
+    const t = Number(v);
+    if (!Number.isFinite(t)) return;
+    setOpts((o) => ({ ...o, startTemp: t }));
+    reprocessAll(t, opts.refOffset);
+  };
+
+  const setRefOffset = (v) => {
+    const t = Number(v);
+    if (!Number.isFinite(t) || t < 0) return;
+    setOpts((o) => ({ ...o, refOffset: t }));
+    reprocessAll(opts.startTemp, t);
+  };
+
+  const update = (id, patch) => setSets((s) => s.map((d) => (d.id === id ? { ...d, ...patch } : d)));
+  const remove = (id) => setSets((s) => s.filter((d) => d.id !== id));
+
+  // --- 300 DPI PNG export: chart is treated as 7.6 × 5.4 in → 2280 × 1620 px,
+  //     and a pHYs chunk (300 dpi) is written into the PNG so software reads it as 300 DPI.
+  const crc32 = (buf) => {
+    let table = crc32.t;
+    if (!table) {
+      table = crc32.t = [];
+      for (let n = 0; n < 256; n++) {
+        let c = n;
+        for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+        table[n] = c >>> 0;
+      }
+    }
+    let c = 0xffffffff;
+    for (let i = 0; i < buf.length; i++) c = table[(c ^ buf[i]) & 0xff] ^ (c >>> 8);
+    return (c ^ 0xffffffff) >>> 0;
+  };
+
+  const setDpi300 = (pngBytes) => {
+    const ppm = 11811; // 300 dpi in pixels per meter
+    const chunk = new Uint8Array(21); // len(4) + "pHYs"(4) + data(9) + crc(4)
+    const dv = new DataView(chunk.buffer);
+    dv.setUint32(0, 9);
+    chunk.set([0x70, 0x48, 0x59, 0x73], 4); // "pHYs"
+    dv.setUint32(8, ppm);
+    dv.setUint32(12, ppm);
+    chunk[16] = 1; // unit: meter
+    dv.setUint32(17, crc32(chunk.subarray(4, 17)));
+    const out = new Uint8Array(pngBytes.length + 21);
+    out.set(pngBytes.subarray(0, 33)); // signature + IHDR
+    out.set(chunk, 33);
+    out.set(pngBytes.subarray(33), 54);
+    return out;
+  };
+
+  const exportPNG = (scale, embed300dpi, filename) => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    setErr("");
+    // clone with explicit pixel size — an SVG with width="100%" has no
+    // intrinsic size and rasterizes blank/zero in some browsers
+    const clone = svg.cloneNode(true);
+    clone.setAttribute("width", "760");
+    clone.setAttribute("height", "540");
+    clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    const xml = new XMLSerializer().serializeToString(clone);
+    const img = new Image();
+    img.onerror = () => setErr("PNG export failed: chart could not be rasterized.");
+    img.onload = () => {
+      try {
+        const c = document.createElement("canvas");
+        c.width = 760 * scale; c.height = 540 * scale;
+        const ctx = c.getContext("2d");
+        ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, c.width, c.height);
+        ctx.drawImage(img, 0, 0, c.width, c.height);
+        const b64 = c.toDataURL("image/png").split(",")[1];
+        let out;
+        if (embed300dpi) {
+          const bin = atob(b64);
+          const bytes = new Uint8Array(bin.length);
+          for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+          out = setDpi300(bytes);
+        }
+        let href;
+        if (out) {
+          // re-encode as a base64 data URL: avoids blob-URL revocation/sandbox
+          // issues that can silently cancel the download
+          let s = "";
+          const CH = 0x8000;
+          for (let i = 0; i < out.length; i += CH) {
+            s += String.fromCharCode.apply(null, out.subarray(i, Math.min(i + CH, out.length)));
+          }
+          href = "data:image/png;base64," + btoa(s);
+        } else {
+          href = "data:image/png;base64," + b64;
+        }
+        const a = document.createElement("a");
+        a.download = filename;
+        a.href = href;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      } catch (e) {
+        setErr("PNG export failed: " + e.message);
+      }
+    };
+    img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(xml);
+  };
+
+  // 300 DPI: 760×540 → 2280×1620 = 7.6×5.4 in @ 300 DPI (pHYs embedded)
+  const downloadPNG = () => exportPNG(3, true, "tga-plot_300dpi.png");
+  // standard: screen-size 760×540, no DPI metadata — small file for quick sharing
+  const downloadPNGStandard = () => exportPNG(1, false, "tga-plot.png");
+
+  // Export the PROCESSED data (normalized weight %) as an .xlsx:
+  // "Summary" sheet (Td5/Td10/residue per sample) + one sheet per dataset
+  // with full-resolution Temperature / Weight (%) columns.
+  const exportExcel = () => {
+    if (!sets.length) return;
+    setErr("");
+    try {
+      const wb = XLSX.utils.book_new();
+      const summary = sets.map((d) => ({
+        "Sample": d.name,
+        "Td5% (°C)": d.proc.td5 != null ? +d.proc.td5.toFixed(1) : "",
+        "Td10% (°C)": d.proc.td10 != null ? +d.proc.td10.toFixed(1) : "",
+        "Residue (%)": +d.proc.residue.toFixed(2),
+        "100% ref. temp (°C)": +d.proc.refT.toFixed(1),
+        "Max temp (°C)": +d.proc.tMax.toFixed(1),
+        "Data points": d.proc.full.length,
+      }));
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(summary), "Summary");
+      const used = new Set(["Summary"]);
+      sets.forEach((d, i) => {
+        let base = (d.name || `Data${i + 1}`).replace(/[\\\/\?\*\[\]:]/g, "").trim().slice(0, 28) || `Data${i + 1}`;
+        let name = base, k = 1;
+        while (used.has(name)) name = `${base}_${++k}`.slice(0, 31);
+        used.add(name);
+        const rows = d.proc.full.map((p) => ({
+          "Temperature (°C)": +p.T.toFixed(3),
+          "Weight (%)": +p.w.toFixed(4),
+        }));
+        XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows), name);
+      });
+      const b64 = XLSX.write(wb, { bookType: "xlsx", type: "base64" });
+      const a = document.createElement("a");
+      a.download = "tga-processed.xlsx";
+      a.href = "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," + b64;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } catch (e) {
+      setErr("Excel export failed: " + e.message);
+    }
+  };
+
+  const S = {
+    page: { fontFamily: "Arial, Helvetica, sans-serif", background: "#eef0f2", minHeight: "100vh", padding: "20px", color: "#1a1a1a" },
+    shell: { maxWidth: 1150, margin: "0 auto" },
+    h1: { fontSize: 22, fontWeight: "bold", margin: "0 0 2px" },
+    sub: { fontSize: 13, color: "#555", margin: "0 0 16px" },
+    grid: { display: "grid", gridTemplateColumns: "minmax(0,1fr) 330px", gap: 16, alignItems: "start" },
+    card: { background: "#fff", border: "1px solid #ccd0d4", borderRadius: 4, padding: 14 },
+    drop: { border: "2px dashed #9aa4ae", borderRadius: 4, padding: "18px 14px", textAlign: "center", cursor: "pointer", background: "#fafbfc", fontSize: 13.5 },
+    label: { fontSize: 13, display: "flex", alignItems: "center", gap: 7, marginBottom: 8 },
+    num: { width: 62, fontFamily: "inherit", fontSize: 13, padding: "3px 5px", border: "1px solid #aaa", borderRadius: 3 },
+    btn: { fontFamily: "inherit", fontSize: 13.5, padding: "7px 14px", border: "1px solid #2c5f8a", background: "#33699a", color: "#fff", borderRadius: 3, cursor: "pointer" },
+    row: { display: "flex", alignItems: "center", gap: 8, padding: "7px 0", borderBottom: "1px solid #e4e6e8", fontSize: 13 },
+    small: { fontSize: 11.5, color: "#666" },
+    x: { border: "none", background: "none", color: "#b00", cursor: "pointer", fontSize: 15, padding: "0 4px" },
+    secTitle: { fontSize: 13.5, fontWeight: "bold", margin: "0 0 8px" },
+  };
+
+  return (
+    <div style={S.page}>
+      <div style={S.shell}>
+        <h1 style={S.h1}>TGA Plot Generator</h1>
+        <p style={S.sub}>Upload Excel → normalize to 100% at the {opts.startTemp}°C stabilization point → auto-mark Td5% / Td10% / residue</p>
+
+        <div style={S.grid}>
+          {/* chart */}
+          <div style={S.card}>
+            {sets.length === 0 ? (
+              <div style={{ ...S.drop, padding: "90px 20px" }}
+                onClick={() => fileRef.current?.click()}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => { e.preventDefault(); handleFiles(e.dataTransfer.files); }}>
+                <div style={{ fontSize: 15, fontWeight: "bold", marginBottom: 6 }}>Drag & drop Excel files here, or click to upload</div>
+                <div style={S.small}>.xlsx / .csv · Column A = Temperature (°C), Column B = Mass · multiple files supported</div>
+              </div>
+            ) : (
+              <>
+                <Chart sets={sets} opts={opts} svgRef={svgRef} />
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
+                  <button style={S.btn} onClick={downloadPNG}>Export PNG (300 DPI)</button>
+                  <button style={{ ...S.btn, background: "#5a7a94", borderColor: "#4a6a84" }} onClick={downloadPNGStandard}>Export PNG (standard)</button>
+                  <button style={{ ...S.btn, background: "#2e7d4f", borderColor: "#256b42" }} onClick={exportExcel}>Export Excel (processed)</button>
+                  <button style={{ ...S.btn, background: "#fff", color: "#33699a" }} onClick={() => fileRef.current?.click()}>+ Add data</button>
+                </div>
+              </>
+            )}
+            <input ref={fileRef} type="file" multiple accept=".xlsx,.xls,.csv,.txt" style={{ display: "none" }}
+              onChange={(e) => handleFiles(e.target.files)} />
+            {err && <div style={{ color: "#b00", fontSize: 12.5, marginTop: 8 }}>{err}</div>}
+          </div>
+
+          {/* controls */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            <div style={S.card}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+                <p style={{ ...S.secTitle, margin: 0 }}>Datasets</p>
+                {sets.length > 0 && (
+                  <button
+                    style={{ fontFamily: "inherit", fontSize: 12, padding: "3px 9px", border: "1px solid #b00", background: "#fff", color: "#b00", borderRadius: 3, cursor: "pointer" }}
+                    onClick={() => setSets([])}>
+                    Clear all
+                  </button>
+                )}
+              </div>
+              {sets.length === 0 && <div style={S.small}>Uploaded files will appear here.</div>}
+              {sets.map((d) => (
+                <div key={d.id}>
+                  <div style={S.row}>
+                    <input type="checkbox" checked={d.visible} onChange={(e) => update(d.id, { visible: e.target.checked })} />
+                    <input type="color" value={d.color} onChange={(e) => update(d.id, { color: e.target.value })}
+                      style={{ width: 26, height: 22, border: "none", padding: 0, cursor: "pointer" }} />
+                    <input value={d.name} onChange={(e) => update(d.id, { name: e.target.value })}
+                      style={{ flex: 1, minWidth: 0, fontFamily: "inherit", fontSize: 13, border: "1px solid #ccc", borderRadius: 3, padding: "3px 6px" }} />
+                    <button style={S.x} title="Remove" onClick={() => remove(d.id)}>✕</button>
+                  </div>
+                  <div style={{ ...S.small, padding: "2px 0 8px 26px" }}>
+                    {`Td5% ${d.proc.td5 ? d.proc.td5.toFixed(1) + "°C" : "–"} · Td10% ${d.proc.td10 ? d.proc.td10.toFixed(1) + "°C" : "–"} · Residue ${d.proc.residue.toFixed(1)}% (@${d.proc.tMax.toFixed(0)}°C)`}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div style={S.card}>
+              <p style={S.secTitle}>Settings</p>
+              <label style={S.label}>Stabilization temp (ramp start)
+                <input style={S.num} type="number" value={opts.startTemp} onChange={(e) => setStartTemp(e.target.value)} /> °C
+              </label>
+              <label style={S.label}>100% ref. offset (+°C after start)
+                <input style={S.num} type="number" step="5" value={opts.refOffset} onChange={(e) => setRefOffset(e.target.value)} /> °C
+              </label>
+              <div style={{ ...S.small, margin: "-2px 0 10px" }}>
+                Weight is set to 100% at {opts.startTemp + opts.refOffset}°C; the curve is held flat at 100% before that point.
+              </div>
+              <label style={S.label}>
+                <input type="checkbox" checked={opts.xMaxAuto} onChange={(e) => setOpts({ ...opts, xMaxAuto: e.target.checked })} />
+                Auto X-axis maximum
+              </label>
+              {!opts.xMaxAuto && (
+                <label style={{ ...S.label, paddingLeft: 22 }}>Max temperature
+                  <input style={S.num} type="number" step="50" value={opts.xMax}
+                    onChange={(e) => setOpts({ ...opts, xMax: Number(e.target.value) || 800 })} /> °C
+                </label>
+              )}
+              <label style={S.label}>Line width
+                <input type="range" min="1" max="4" step="0.2" value={opts.lineWidth}
+                  onChange={(e) => setOpts({ ...opts, lineWidth: Number(e.target.value) })} />
+              </label>
+              {[
+                ["grid", "Show grid lines"],
+                ["showTd5", "Td5% marker (○)"],
+                ["showTd10", "Td10% marker (□)"],
+                ["tdLabels", "Td value labels"],
+                ["showResidue", "Show residue %"],
+              ].map(([k, t]) => (
+                <label key={k} style={S.label}>
+                  <input type="checkbox" checked={opts[k]} onChange={(e) => setOpts({ ...opts, [k]: e.target.checked })} />
+                  {t}
+                </label>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<TGAPlotter />);
+</script>
+<div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#888;text-align:center;padding:14px 0 22px;background:#eef0f2;">
+  Built by <a href="https://ajinyoung-kim.github.io" style="color:#33699a;">Jinyoung Kim</a> · Koros Group, Georgia Tech · All data is processed locally in your browser and never uploaded.
+</div>
+</body>
+</html>
