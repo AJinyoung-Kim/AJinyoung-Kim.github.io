@@ -93,6 +93,11 @@
   .cv-desc span { display: block; color: var(--muted); font-size: .8rem; }
   .cv-download { margin-top: 20px; font-size: .9rem; }
 
+  /* ── TOOLS ── */
+  .tool-launch { display: inline-block; margin-top: 8px; font-size: .88rem; font-weight: bold; padding: 8px 18px; background: #1a3a5c; color: #fff !important; border-radius: 3px; }
+  .tool-launch:hover { background: var(--accent); text-decoration: none; }
+  .tool-meta { font-size: .78rem; color: var(--muted); margin-top: 8px; }
+
   /* FOOTER */
   footer { border-top: 1px solid var(--line); padding: 28px 0; font-size: .82rem; color: var(--muted); }
   footer .foot-inner { max-width: var(--max); margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
@@ -122,6 +127,7 @@
       <li><a id="nav-home" onclick="show('home')">Home</a></li>
       <li><a id="nav-news" onclick="show('news')">News</a></li>
       <li><a id="nav-research" onclick="show('research')">Research</a></li>
+      <li><a id="nav-tools" onclick="show('tools')">Tools</a></li>
       <li><a id="nav-publications" onclick="show('publications')">Publications</a></li>
       <li><a id="nav-cv" onclick="show('cv')">CV</a></li>
     </ul>
@@ -355,6 +361,21 @@
 </div>
 </div>
 
+<!-- ══════════ TOOLS ══════════ -->
+<div id="panel-tools" class="panel">
+<div class="page">
+  <h2>Tools</h2>
+  <p class="pub-section-note">Free, browser-based tools for the research community. All data is processed locally in your browser — nothing is uploaded to any server.</p>
+
+  <div class="research-item">
+    <h3>TGA Plot Generator</h3>
+    <p>Upload thermogravimetric analysis (TGA) data from Excel and instantly generate publication-ready plots. The tool automatically removes the initial moisture-drying segment, normalizes weight to 100% at a stabilized reference point, and annotates T<sub>d5%</sub>, T<sub>d10%</sub>, and final residue with automatic label placement. Supports multi-sample overlay with custom colors, adjustable normalization settings, 300 DPI PNG export for publications, and export of the processed data as Excel.</p>
+    <a class="tool-launch" href="tools/tga-plotter.html" target="_blank">Launch TGA Plot Generator →</a>
+    <p class="tool-meta">Input: .xlsx / .csv (Column A = temperature, Column B = mass) · Best viewed on desktop · Feedback welcome at <a href="mailto:jkim4046@gatech.edu">jkim4046@gatech.edu</a></p>
+  </div>
+</div>
+</div>
+
 <!-- ══════════ PUBLICATIONS ══════════ -->
 <div id="panel-publications" class="panel">
 <div class="page">
@@ -466,7 +487,7 @@
 
 <script>
   function show(tab) {
-    ['home','news','research','publications','cv'].forEach(t => {
+    ['home','news','research','tools','publications','cv'].forEach(t => {
       document.getElementById('panel-' + t).classList.toggle('active', t === tab);
       document.getElementById('nav-' + t).classList.toggle('active', t === tab);
     });
