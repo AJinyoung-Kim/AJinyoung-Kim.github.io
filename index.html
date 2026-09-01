@@ -494,7 +494,7 @@
 
 <footer>
   <div class="foot-inner">
-    <span>© 2026 Jinyoung Kim · Georgia Institute of Technology</span>
+    <span>© 2026 Jinyoung Kim · Georgia Institute of Technology<span id="visit-count"></span></span>
     <span><a href="mailto:jkim4046@gatech.edu">jkim4046@gatech.edu</a></span>
   </div>
 </footer>
@@ -531,6 +531,17 @@
 </script>
 
 <script data-goatcounter="https://flycorea.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+  fetch('https://flycorea.goatcounter.com/counter/TOTAL.json')
+    .then(r => r.ok ? r.json() : null)
+    .then(d => {
+      if (d && d.count) {
+        document.getElementById('visit-count').textContent =
+          ' · ' + d.count.replace(/\s/g, ',') + ' visits';
+      }
+    })
+    .catch(() => {});
+</script>
 
 </body>
 </html>
