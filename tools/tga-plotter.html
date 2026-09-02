@@ -15,6 +15,12 @@ html,body{margin:0;padding:0}
 @media (max-width: 760px) {
   .layout-grid { grid-template-columns: 1fr !important; }
   .page-pad { padding: 12px !important; }
+  /* even-width export buttons instead of a ragged wrapped row */
+  .btn-row { display: grid !important; grid-template-columns: 1fr 1fr; align-items: stretch; }
+  .btn-row > button { width: 100%; }
+}
+@media (max-width: 430px) {
+  .btn-row { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -582,7 +588,7 @@ function TGAPlotter() {
             ) : (
               <>
                 <Chart sets={sets} opts={opts} svgRef={svgRef} />
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
+                <div className="btn-row" style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
                   <button style={S.btn} onClick={downloadPNG}>Export PNG (300 DPI)</button>
                   <button style={{ ...S.btn, background: "#5a7a94", borderColor: "#4a6a84" }} onClick={downloadPNGStandard}>Export PNG (standard)</button>
                   <button style={{ ...S.btn, background: "#2e7d4f", borderColor: "#256b42" }} onClick={exportExcel}>Export Excel (processed)</button>
