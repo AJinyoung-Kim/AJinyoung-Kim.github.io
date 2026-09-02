@@ -15,6 +15,7 @@
     --bg:     #ffffff;
     --accent: #c9831e;
     --tab-hover: #f4ece0;
+    --tab-active: #ecdfc9;
     --max:    1100px;
   }
   html { scroll-behavior: smooth; }
@@ -31,7 +32,8 @@
                  padding: 6px 12px; border-radius: 4px; transition: background-color .15s ease, color .15s ease; }
   /* hover tints the tab instead of bolding it, so the row never reflows */
   .nav-links a:hover { background: var(--tab-hover); color: var(--text); text-decoration: none; }
-  .nav-links a.active { color: var(--text); text-decoration: none; font-weight: bold; }
+  /* the current tab keeps the tint (a shade deeper) instead of going bold, so the row never reflows */
+  .nav-links a.active { background: var(--tab-active); color: var(--text); text-decoration: none; }
 
   /* PANELS */
   .panel { display: none; }
