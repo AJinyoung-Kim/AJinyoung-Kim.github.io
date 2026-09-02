@@ -21,6 +21,8 @@ html,body{margin:0;padding:0}
   .info-pad { padding: 0 12px 6px !important; }
   .info-pad h2 { font-size: 15px !important; }
   .info-pad > div > div { padding: 16px 14px !important; }
+  /* the author link sits right under the title on phones and is easy to hit by accident */
+  .byline { display: none !important; }
 }
 @media (max-width: 430px) {
   .btn-row { grid-template-columns: 1fr; }
@@ -565,8 +567,10 @@ function TGAPlotter() {
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
           <h1 style={S.h1}>TGA Plot Generator</h1>
           <div style={{ fontSize: 13, color: "#555" }}>
-            by <a href="https://ajinyoung-kim.github.io" target="_blank" style={{ color: "#33699a", fontWeight: "bold" }}>Jinyoung Kim</a>
-            {" · "}
+            <span className="byline">
+              by <a href="https://ajinyoung-kim.github.io" target="_blank" style={{ color: "#33699a", fontWeight: "bold" }}>Jinyoung Kim</a>
+              {" · "}
+            </span>
             <a href="https://ajinyoung-kim.github.io/#tools" target="_blank" style={{ color: "#33699a" }}>More tools →</a>
           </div>
         </div>
