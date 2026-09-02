@@ -115,11 +115,15 @@
     .home-grid { grid-template-columns: 1fr; }
     .profile-photo { width: 160px; height: 200px; }
     .profile-col { align-items: center; }
-    .nav-links { gap: 16px; }
+    /* the site name wraps and pushes the tabs off-screen on phones;
+       the Home tab already covers it */
+    .nav-name { display: none; }
+    .nav-links { flex: 1; gap: 10px; justify-content: space-between; }
+    .nav-links a { font-size: .82rem; white-space: nowrap; }
     .bio-row, .cv-row { grid-template-columns: 1fr; gap: 1px; }
     .news-list li { grid-template-columns: 1fr; gap: 2px; }
     .page { padding: 40px 20px 64px; }
-    .nav-inner { padding: 0 20px; }
+    .nav-inner { padding: 0 14px; }
     footer .foot-inner { padding: 0 20px; }
   }
 </style>
