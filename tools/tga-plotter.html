@@ -18,6 +18,9 @@ html,body{margin:0;padding:0}
   /* even-width export buttons instead of a ragged wrapped row */
   .btn-row { display: grid !important; grid-template-columns: 1fr 1fr; align-items: stretch; }
   .btn-row > button { width: 100%; }
+  .info-pad { padding: 0 12px 6px !important; }
+  .info-pad h2 { font-size: 15px !important; }
+  .info-pad > div > div { padding: 16px 14px !important; }
 }
 @media (max-width: 430px) {
   .btn-row { grid-template-columns: 1fr; }
@@ -679,6 +682,72 @@ function TGAPlotter() {
 
 ReactDOM.createRoot(document.getElementById("root")).render(<TGAPlotter />);
 </script>
+<div class="info-pad" style="background:#eef0f2;font-family:Arial,Helvetica,sans-serif;color:#1a1a1a;padding:0 20px 6px;">
+  <div style="max-width:1150px;margin:0 auto;">
+
+    <div style="background:#fff;border:1px solid #ccd0d4;border-radius:4px;padding:20px 24px;margin-bottom:14px;">
+      <h2 style="font-size:16px;font-weight:bold;margin:0 0 10px;">How to use</h2>
+      <ol style="margin:0 0 0 20px;padding:0;font-size:13.5px;line-height:1.75;">
+        <li><b>Drop in your raw TGA Excel file exactly as exported from the instrument</b> — no pre-processing, no trimming, no manual normalization needed. Column A should be temperature (°C) and Column B the mass signal. Add several files at once to overlay samples.</li>
+        <li>Adjust anything you like in the side panel: sample names, colors, grid lines, X-axis range, line width, or the normalization settings.</li>
+        <li>Export: <b>300 DPI PNG</b> for manuscripts, a standard PNG for slides and quick sharing, or the fully processed data back as an <b>Excel file</b> (with a summary table of Td5% / Td10% / residue per sample).</li>
+      </ol>
+    </div>
+
+    <div style="background:#fff;border:1px solid #ccd0d4;border-radius:4px;padding:20px 24px;margin-bottom:14px;">
+      <h2 style="font-size:16px;font-weight:bold;margin:0 0 10px;">Raw data in, clean plot out — the messy start is handled for you</h2>
+      <p style="font-size:13.5px;line-height:1.7;margin:0 0 10px;">
+        Real TGA runs rarely start clean: there is usually an initial moisture-drying / equilibration segment where the mass drifts below 100% before the actual heating ramp begins. You do <b>not</b> need to trim or correct any of this — the tool does it automatically:
+      </p>
+      <ul style="margin:0 0 0 20px;padding:0;font-size:13.5px;line-height:1.75;">
+        <li>Detects where the true heating ramp starts and <b>discards the unstable drying/equilibration segment</b> before it.</li>
+        <li><b>Re-normalizes the weight to 100%</b> at a stabilized reference point (default 50°C = 30°C ramp start + 20°C offset; both adjustable in Settings), so early moisture loss doesn’t distort your curve.</li>
+        <li>Holds the curve flat at 100% before the reference point, so residual drift never shows up as a false early weight loss.</li>
+        <li>Finds <b>Td5% and Td10% by interpolation</b> and reads the <b>residue</b> at the final temperature — values are shown on the plot and listed in the side panel.</li>
+        <li>Places every label automatically so they never overlap each other, the curves, or the legend.</li>
+      </ul>
+    </div>
+
+    <div style="background:#fff;border:1px solid #ccd0d4;border-radius:4px;padding:20px 24px;margin-bottom:14px;">
+      <h2 style="font-size:16px;font-weight:bold;margin:0 0 10px;">Everything it can do</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:4px 28px;font-size:13px;line-height:1.7;">
+        <div>
+          <b>Data</b>
+          <ul style="margin:2px 0 10px 18px;padding:0;">
+            <li>.xlsx / .xls / .csv input, multiple files at once</li>
+            <li>Automatic removal of the unstable initial segment</li>
+            <li>100% normalization at an adjustable reference temperature</li>
+            <li>Automatic Td5%, Td10%, and residue determination</li>
+            <li>Built-in sample dataset to try instantly</li>
+          </ul>
+          <b>Plot</b>
+          <ul style="margin:2px 0 10px 18px;padding:0;">
+            <li>Multi-sample overlay with per-sample color picker</li>
+            <li>Rename, hide/show, remove samples; clear all at once</li>
+            <li>Auto or manual X-axis maximum (800, 1000°C, ...)</li>
+            <li>Grid lines, line width, marker and label toggles</li>
+            <li>Smart label placement with leader lines</li>
+            <li>Publication style: boxed axes, Arial, legend auto-sized</li>
+          </ul>
+        </div>
+        <div>
+          <b>Export</b>
+          <ul style="margin:2px 0 10px 18px;padding:0;">
+            <li>300 DPI PNG (true DPI metadata embedded, 7.6×5.4 in) for journals</li>
+            <li>Standard-size PNG for slides and messages</li>
+            <li>Processed Excel: summary table + full-resolution normalized data per sample</li>
+          </ul>
+          <b>Privacy</b>
+          <ul style="margin:2px 0 10px 18px;padding:0;">
+            <li>Runs 100% in your browser — your data is never uploaded to any server</li>
+            <li>No sign-up, no installation, free to use</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
 <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#888;text-align:center;padding:14px 0 22px;background:#eef0f2;">
   Built by <a href="https://ajinyoung-kim.github.io" style="color:#33699a;">Jinyoung Kim</a> · Koros Group, Georgia Tech · All data is processed locally in your browser and never uploaded.
 </div>
