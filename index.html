@@ -14,6 +14,7 @@
     --line:   #ddd;
     --bg:     #ffffff;
     --accent: #c9831e;
+    --tab-hover: #f4ece0;
     --max:    1100px;
   }
   html { scroll-behavior: smooth; }
@@ -25,9 +26,12 @@
   nav { border-bottom: 1px solid var(--line); position: sticky; top: 0; background: rgba(255,255,255,0.97); z-index: 10; }
   .nav-inner { max-width: var(--max); margin: 0 auto; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 54px; }
   .nav-name { font-family: Georgia, serif; font-weight: bold; font-size: 1rem; color: var(--text); cursor: pointer; }
-  .nav-links { list-style: none; display: flex; gap: 32px; }
-  .nav-links a { font-size: .9rem; color: var(--muted); cursor: pointer; }
-  .nav-links a:hover, .nav-links a.active { color: var(--text); text-decoration: none; font-weight: bold; }
+  .nav-links { list-style: none; display: flex; gap: 8px; }
+  .nav-links a { display: block; font-size: .9rem; color: var(--muted); cursor: pointer;
+                 padding: 6px 12px; border-radius: 4px; transition: background-color .15s ease, color .15s ease; }
+  /* hover tints the tab instead of bolding it, so the row never reflows */
+  .nav-links a:hover { background: var(--tab-hover); color: var(--text); text-decoration: none; }
+  .nav-links a.active { color: var(--text); text-decoration: none; font-weight: bold; }
 
   /* PANELS */
   .panel { display: none; }
@@ -118,13 +122,19 @@
     /* the site name wraps and pushes the tabs off-screen on phones;
        the Home tab already covers it */
     .nav-name { display: none; }
-    .nav-links { flex: 1; gap: 10px; justify-content: space-between; }
-    .nav-links a { font-size: .82rem; white-space: nowrap; }
+    .nav-links { flex: 1; gap: 0; justify-content: space-between; }
+    .nav-links a { font-size: .82rem; white-space: nowrap; padding: 5px 7px; }
     .bio-row, .cv-row { grid-template-columns: 1fr; gap: 1px; }
     .news-list li { grid-template-columns: 1fr; gap: 2px; }
     .page { padding: 40px 20px 64px; }
     .nav-inner { padding: 0 14px; }
     footer .foot-inner { padding: 0 20px; }
+  }
+
+  /* very narrow phones: shrink the tabs a little more so all six still fit */
+  @media (max-width: 360px) {
+    .nav-inner { padding: 0 8px; }
+    .nav-links a { font-size: .78rem; padding: 5px 4px; }
   }
 </style>
 </head>
