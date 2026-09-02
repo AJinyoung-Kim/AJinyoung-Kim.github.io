@@ -9,7 +9,14 @@
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<style>html,body{margin:0;padding:0}</style>
+<style>
+html,body{margin:0;padding:0}
+/* stack the chart and control panels on phones */
+@media (max-width: 760px) {
+  .layout-grid { grid-template-columns: 1fr !important; }
+  .page-pad { padding: 12px !important; }
+}
+</style>
 </head>
 <body>
 <div id="root"></div>
@@ -544,7 +551,7 @@ function TGAPlotter() {
   };
 
   return (
-    <div style={S.page}>
+    <div className="page-pad" style={S.page}>
       <div style={S.shell}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
           <h1 style={S.h1}>TGA Plot Generator</h1>
@@ -556,7 +563,7 @@ function TGAPlotter() {
         </div>
         <p style={S.sub}>Upload Excel → normalize to 100% at the {opts.startTemp}°C stabilization point → auto-mark Td5% / Td10% / residue</p>
 
-        <div style={S.grid}>
+        <div className="layout-grid" style={S.grid}>
           {/* chart */}
           <div style={S.card}>
             {sets.length === 0 ? (
