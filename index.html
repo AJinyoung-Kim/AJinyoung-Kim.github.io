@@ -138,6 +138,76 @@
     .nav-inner { padding: 0 8px; }
     .nav-links a { font-size: .78rem; padding: 5px 4px; }
   }
+  /* ── AIChE 2026 RSVP popup ── */
+  .rsvp-backdrop { position: fixed; inset: 0; z-index: 100; background: rgba(20,20,20,.45);
+                   display: flex; align-items: center; justify-content: center; padding: 20px;
+                   opacity: 0; transition: opacity .2s ease; }
+  .rsvp-backdrop[hidden] { display: none; }
+  .rsvp-backdrop.open { opacity: 1; }
+  .rsvp-dialog { position: relative; width: 100%; max-width: 640px; max-height: calc(100vh - 40px); overflow-y: auto;
+                 background: #fff; border-top: 4px solid var(--accent); border-radius: 6px;
+                 box-shadow: 0 18px 50px rgba(0,0,0,.25); padding: 28px 30px 22px;
+                 transform: translateY(8px); transition: transform .2s ease; }
+  .rsvp-backdrop.open .rsvp-dialog { transform: none; }
+  .rsvp-close { position: absolute; top: 8px; right: 10px; background: none; border: 0; cursor: pointer;
+                font-size: 1.6rem; line-height: 1; color: var(--muted); padding: 4px 8px; }
+  .rsvp-close:hover { color: var(--text); }
+  .rsvp-eyebrow { font-size: .72rem; font-weight: bold; letter-spacing: .12em; text-transform: uppercase; color: var(--accent);padding-right: 28px; }
+  .rsvp-title { font-size: 1.45rem; margin: 2px 0 6px; }
+  .rsvp-intro { font-size: .92rem; color: #444; margin-bottom: 16px; }
+  .rsvp-events { display: grid; gap: 12px; }
+  .rsvp-card { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;
+               border: 1px solid var(--line); border-radius: 5px; padding: 14px 16px;
+               transition: border-color .15s ease, background-color .15s ease; }
+  .rsvp-card.selected { border-color: var(--accent); background: #fbf7f0; }
+  .rsvp-card.ended { opacity: .55; }
+  .rsvp-kind { font-size: .72rem; font-weight: bold; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); line-height: 1.4; }
+  .rsvp-when { font-weight: bold; font-size: .95rem; margin-top: 3px; }
+  .rsvp-where { font-size: .86rem; color: var(--muted); line-height: 1.5; }
+  .rsvp-what { font-size: .88rem; font-style: italic; margin-top: 6px; line-height: 1.5; }
+  .rsvp-cal { font-size: .78rem; color: var(--muted); margin-top: 6px; }
+  .rsvp-attend { font-family: inherit; font-size: .9rem; font-weight: bold; white-space: nowrap; min-width: 118px;
+                 padding: 8px 16px; border: 1.5px solid #1a3a5c; border-radius: 3px; background: #fff; color: #1a3a5c; cursor: pointer;
+                 transition: background-color .15s ease, color .15s ease; }
+  .rsvp-attend:hover { background: #eef2f6; }
+  .rsvp-attend[aria-pressed="true"] { background: #1a3a5c; color: #fff; }
+  .rsvp-attend:disabled { cursor: default; border-color: var(--line); color: var(--muted); background: #fff; }
+  .rsvp-form { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .rsvp-form[hidden] { display: none; }
+  .rsvp-lead { font-size: .92rem; margin-bottom: 10px; }
+  .rsvp-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; }
+  .rsvp-fields .full { grid-column: 1 / -1; }
+  .rsvp-fields label { display: block; font-size: .78rem; color: var(--muted); }
+  .rsvp-fields input { display: block; width: 100%; margin-top: 2px; font-family: inherit; font-size: .95rem;
+                       padding: 7px 9px; border: 1px solid #ccc; border-radius: 3px; }
+  .rsvp-fields input:focus { outline: 2px solid #1a3a5c33; border-color: #1a3a5c; }
+  .rsvp-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .rsvp-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+  .rsvp-note { font-size: .78rem; color: var(--muted); }
+  .rsvp-submit { font-family: inherit; font-size: .95rem; font-weight: bold; padding: 9px 22px; border: 0; border-radius: 3px;
+                 background: #1a3a5c; color: #fff; cursor: pointer; }
+  .rsvp-submit:hover { background: #24507c; }
+  .rsvp-submit:disabled { opacity: .6; cursor: default; }
+  .rsvp-error { font-size: .85rem; color: #a02020; margin-top: 8px; }
+  .rsvp-error:empty { display: none; }
+  .rsvp-foot { margin-top: 14px; text-align: right; }
+  .rsvp-later { background: none; border: 0; font-family: inherit; font-size: .85rem; color: var(--muted); cursor: pointer; text-decoration: underline; }
+  .rsvp-done { text-align: center; padding: 18px 4px 6px; }
+  .rsvp-done h2 { font-size: 1.4rem; margin-bottom: 6px; }
+  .rsvp-done p { font-size: .92rem; color: #444; }
+  .rsvp-done .rsvp-cal { font-size: .85rem; margin-top: 12px; }
+  .rsvp-link { background: none; border: 0; padding: 0; font: inherit; color: var(--link); cursor: pointer; font-weight: bold; white-space: nowrap; }
+  .rsvp-link:hover { text-decoration: underline; }
+  @media (max-width: 560px) {
+    .rsvp-backdrop { padding: 10px; align-items: flex-end; }
+    .rsvp-dialog { padding: 24px 18px 16px; max-height: calc(100vh - 20px); }
+    .rsvp-title { font-size: 1.25rem; }
+    .rsvp-card { grid-template-columns: 1fr; gap: 10px; }
+    .rsvp-attend { width: 100%; }
+    .rsvp-fields { grid-template-columns: 1fr; }
+    .rsvp-actions { flex-direction: column-reverse; align-items: stretch; }
+    .rsvp-submit { width: 100%; }
+  }
 </style>
 </head>
 <body>
@@ -198,7 +268,7 @@
   <div style="margin-top:28px; border-top:1px solid var(--line); padding-top:24px;">
     <h2 style="margin-bottom:10px;">News</h2>
     <ul class="news-list">
-      <li><span class="news-date">Nov 2026</span><span><span class="news-new">Upcoming —</span> Presenting at <strong>2026 AIChE Annual Meeting</strong>, Minneapolis, MN (Poster, Nov 8 · Oral, Nov 11).</span></li>
+      <li><span class="news-date">Nov 2026</span><span><span class="news-new">Upcoming —</span> Presenting at <strong>2026 AIChE Annual Meeting</strong>, Minneapolis, MN (Poster, Nov 8 · Oral, Nov 11). <button type="button" class="rsvp-link" data-rsvp-open>RSVP →</button></span></li>
       <li><span class="news-date">Oct 2026</span><span><span class="news-new">Published —</span> Paper published in <strong><em>Advanced Science</em></strong>: "Transforming Gas Separations with Scalable Carbon Molecular Sieve Membranes Enabled by Chemically Tuned Hollow-Fiber Precursors." <a href="https://doi.org/10.1002/advs.78223" target="_blank">DOI</a></span></li>
       <li><span class="news-date">Sep 2026</span><span><span class="news-new">Published —</span> Paper published in <strong><em>Journal of Membrane Science Letters</em></strong>: "Composite Hot-Melt/Epoxy Potting Architecture for High-Pressure Sorp-Vection Hollow Fiber Modules." <a href="https://doi.org/10.1016/j.memlet.2026.100126" target="_blank">DOI</a></span></li>
            <li><span class="news-date">Aug 2026</span><span><span class="news-new">Submitted —</span> Manuscript submitted to <strong><em>Angewandte Chemie International Edition</em></strong>: "Carbon Molecular Sieve Membranes for Recovery of Xe from Exhaled Anesthetic Gas Mixture."</span></li>
@@ -223,7 +293,7 @@
         <span style="font-size:.82rem; color:var(--muted); padding-top:2px;">Nov 2026</span>
         <div>
           <span style="color:var(--accent); font-weight:bold;">Upcoming — </span>
-          Presenting at <strong>2026 AIChE Annual Meeting</strong>, Minneapolis, MN, November 2026.
+          Presenting at <strong>2026 AIChE Annual Meeting</strong>, Minneapolis, MN, November 2026. <button type="button" class="rsvp-link" data-rsvp-open>RSVP →</button>
           <div style="margin-top:6px; font-size:.88rem; color:var(--muted);">
             <div>• <strong>Poster:</strong> Engineering "Sorp-Vection" Systems for Energy-Efficient Purification of Complex Industrial Fluids — Meet the Faculty and Post-Doc Candidates Poster Session, Nov 8</div>
             <div>• <strong>Oral:</strong> CO₂-Assisted Sorp-Vection In Multi-Fiber Membrane Modules: Mitigating Concentration Polarization Via Fiber Bundling — Membrane Formation, Manufacturing, and Module Design I, Nov 11</div>
@@ -577,6 +647,242 @@
   window.addEventListener('hashchange', () => show(tabFromHash()));
 </script>
 
+
+<!-- ══════════ AIChE 2026 RSVP POPUP ══════════ -->
+<div id="rsvp" class="rsvp-backdrop" hidden>
+  <div class="rsvp-dialog" role="dialog" aria-modal="true" aria-labelledby="rsvp-title">
+    <button type="button" class="rsvp-close" aria-label="Close" data-rsvp-close>&times;</button>
+
+    <div id="rsvp-main">
+      <p class="rsvp-eyebrow">2026 AIChE Annual Meeting · Minneapolis, MN</p>
+      <h2 class="rsvp-title" id="rsvp-title">Let's connect at AIChE</h2>
+      <p class="rsvp-intro">I'm presenting twice this year and look forward to connecting with members of faculty search committees during the meeting. If you plan to stop by, let me know below.</p>
+
+      <div class="rsvp-events">
+        <div class="rsvp-card" data-event="poster">
+          <div>
+            <div class="rsvp-kind">Poster · Meet the Faculty and Post-Doc Candidates</div>
+            <div class="rsvp-when">Sun, Nov 8 · 1:00–3:00 PM CST</div>
+            <div class="rsvp-where">Exhibit Hall B · Poster board 126</div>
+            <div class="rsvp-what">Engineering “Sorp-Vection” Systems for Energy-Efficient Purification of Complex Industrial Fluids</div>
+            <div class="rsvp-cal" data-cal="poster"></div>
+          </div>
+          <button type="button" class="rsvp-attend" aria-pressed="false" data-attend="poster">Attend</button>
+        </div>
+        <div class="rsvp-card" data-event="oral">
+          <div>
+            <div class="rsvp-kind">Talk · Membrane Formation, Manufacturing, and Module Design I</div>
+            <div class="rsvp-when">Wed, Nov 11 · 9:03 AM CST</div>
+            <div class="rsvp-where">Room 102B</div>
+            <div class="rsvp-what">CO₂-Assisted Sorp-Vection in Multi-Fiber Membrane Modules: Mitigating Concentration Polarization via Fiber Bundling</div>
+            <div class="rsvp-cal" data-cal="oral"></div>
+          </div>
+          <button type="button" class="rsvp-attend" aria-pressed="false" data-attend="oral">Attend</button>
+        </div>
+      </div>
+
+      <form class="rsvp-form" id="rsvp-form" novalidate hidden>
+        <p class="rsvp-lead">Wonderful. Who should I look out for?</p>
+        <div class="rsvp-fields">
+          <label>Name *<input name="name" autocomplete="name" maxlength="100" required></label>
+          <label>Affiliation<input name="affiliation" autocomplete="organization" maxlength="150" placeholder="University or company"></label>
+          <label class="full">Email <span>(optional, if you'd like to follow up)</span><input name="email" type="email" autocomplete="email" maxlength="150"></label>
+        </div>
+        <div class="rsvp-hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+        <div class="rsvp-actions">
+          <span class="rsvp-note">Shared only with me. Never shown on this site.</span>
+          <button type="submit" class="rsvp-submit">Let's connect</button>
+        </div>
+        <p class="rsvp-error" role="alert"></p>
+      </form>
+
+      <div class="rsvp-foot"><button type="button" class="rsvp-later" data-rsvp-close>Maybe later</button></div>
+    </div>
+
+    <div id="rsvp-done" class="rsvp-done" hidden>
+      <p class="rsvp-eyebrow">See you in Minneapolis</p>
+      <h2 id="rsvp-thanks">Thank you!</h2>
+      <p id="rsvp-done-msg">I look forward to meeting you.</p>
+      <div class="rsvp-cal" id="rsvp-done-cal"></div>
+      <div class="rsvp-foot" style="text-align:center;"><button type="button" class="rsvp-later" data-rsvp-close>Close</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* AIChE 2026 RSVP popup.
+   RSVP_ENDPOINT: the Cloudflare Worker URL from rsvp/SETUP.md. While it is
+   empty, "Let's connect" falls back to a pre-filled email instead. */
+(function () {
+  const RSVP_ENDPOINT = '';
+  const CONTACT = 'jkim4046@gatech.edu';
+  const KEY = 'aiche2026-rsvp';                       // 'dismissed' | 'sent'
+  const HIDE_AFTER = Date.parse('2026-11-12T05:59:00Z'); // end of Wed Nov 11, CST
+  const EVENTS = {
+    poster: {
+      label: 'Poster, Sun Nov 8, 1:00–3:00 PM CST',
+      title: 'Jinyoung Kim · AIChE poster (Meet the Faculty and Post-Doc Candidates)',
+      start: '20261108T190000Z', end: '20261108T210000Z',
+      location: 'Exhibit Hall B, Poster board 126, 2026 AIChE Annual Meeting, Minneapolis, MN',
+      details: 'Engineering "Sorp-Vection" Systems for Energy-Efficient Purification of Complex Industrial Fluids. https://ajinyoung-kim.github.io'
+    },
+    oral: {
+      label: 'Talk, Wed Nov 11, 9:03 AM CST',
+      title: 'Jinyoung Kim · AIChE talk, Room 102B',
+      start: '20261111T150300Z', end: '20261111T152400Z',
+      location: 'Room 102B, 2026 AIChE Annual Meeting, Minneapolis, MN',
+      details: 'CO2-Assisted Sorp-Vection in Multi-Fiber Membrane Modules: Mitigating Concentration Polarization via Fiber Bundling. Session: Membrane Formation, Manufacturing, and Module Design I. https://ajinyoung-kim.github.io'
+    }
+  };
+
+  const root = document.getElementById('rsvp');
+  const openers = document.querySelectorAll('[data-rsvp-open]');
+  if (!root) return;
+  if (Date.now() > HIDE_AFTER) { root.remove(); openers.forEach(el => el.remove()); return; }
+
+  const store = {
+    get() { try { return localStorage.getItem(KEY); } catch (e) { return null; } },
+    set(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+  };
+  const track = (path) => { try { window.goatcounter && window.goatcounter.count && window.goatcounter.count({ path, event: true }); } catch (e) {} };
+  const utcMs = (t) => Date.UTC(+t.slice(0,4), +t.slice(4,6) - 1, +t.slice(6,8), +t.slice(9,11), +t.slice(11,13));
+
+  // ---- calendar links ----
+  const gcal = (e) => 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+    + '&text=' + encodeURIComponent(e.title) + '&dates=' + e.start + '/' + e.end
+    + '&details=' + encodeURIComponent(e.details) + '&location=' + encodeURIComponent(e.location);
+  const icsEsc = (s) => s.replace(/[\\,;]/g, (m) => '\\' + m);
+  function downloadIcs(id) {
+    const e = EVENTS[id];
+    const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//ajinyoung-kim.github.io//AIChE 2026//EN', 'BEGIN:VEVENT',
+      'UID:' + id + '-aiche2026@ajinyoung-kim.github.io', 'DTSTAMP:' + stamp, 'DTSTART:' + e.start, 'DTEND:' + e.end,
+      'SUMMARY:' + icsEsc(e.title), 'LOCATION:' + icsEsc(e.location), 'DESCRIPTION:' + icsEsc(e.details),
+      'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+    a.download = 'aiche2026-' + id + '.ics';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  }
+  function calLinks(id, prefix) {
+    return (prefix || 'Add to calendar: ') + '<a href="' + gcal(EVENTS[id]) + '" target="_blank" rel="noopener">Google</a> · '
+      + '<a href="#" data-ics="' + id + '">Outlook / Apple</a>';
+  }
+  root.querySelectorAll('[data-cal]').forEach(el => { el.innerHTML = calLinks(el.dataset.cal); });
+  root.addEventListener('click', (ev) => {
+    const ics = ev.target.closest('[data-ics]');
+    if (ics) { ev.preventDefault(); downloadIcs(ics.dataset.ics); }
+  });
+
+  // ---- events that already ended can't be selected ----
+  root.querySelectorAll('.rsvp-card').forEach(card => {
+    if (Date.now() > utcMs(EVENTS[card.dataset.event].end)) {
+      card.classList.add('ended');
+      const b = card.querySelector('.rsvp-attend'); b.disabled = true; b.textContent = 'Ended';
+      card.querySelector('.rsvp-cal').remove();
+    }
+  });
+
+  // ---- open / close ----
+  const dialog = root.querySelector('.rsvp-dialog');
+  let lastFocus = null;
+  function open() {
+    lastFocus = document.activeElement;
+    root.hidden = false;
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => root.classList.add('open'));
+    const first = root.querySelector('.rsvp-attend:not(:disabled)') || root.querySelector('.rsvp-close');
+    first && first.focus({ preventScroll: true });
+    track('rsvp-open');
+  }
+  function close() {
+    root.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => { root.hidden = true; }, 200);
+    if (store.get() !== 'sent') store.set('dismissed');
+    lastFocus && lastFocus.focus && lastFocus.focus({ preventScroll: true });
+  }
+  root.querySelectorAll('[data-rsvp-close]').forEach(b => b.addEventListener('click', close));
+  root.addEventListener('mousedown', (ev) => { if (ev.target === root) close(); });
+  document.addEventListener('keydown', (ev) => {
+    if (root.hidden) return;
+    if (ev.key === 'Escape') close();
+    if (ev.key === 'Tab') {                      // keep focus inside the dialog
+      const f = [...dialog.querySelectorAll('button, a[href], input:not([tabindex="-1"])')].filter(el => !el.disabled && el.offsetParent);
+      if (!f.length) return;
+      if (ev.shiftKey && document.activeElement === f[0]) { ev.preventDefault(); f[f.length - 1].focus(); }
+      else if (!ev.shiftKey && document.activeElement === f[f.length - 1]) { ev.preventDefault(); f[0].focus(); }
+    }
+  });
+  openers.forEach(el => el.addEventListener('click', (ev) => { ev.preventDefault(); open(); }));
+
+  // ---- Attend toggles ----
+  const form = document.getElementById('rsvp-form');
+  const err = form.querySelector('.rsvp-error');
+  const selected = () => [...root.querySelectorAll('.rsvp-attend[aria-pressed="true"]')].map(b => b.dataset.attend);
+  root.querySelectorAll('.rsvp-attend').forEach(btn => btn.addEventListener('click', () => {
+    const on = btn.getAttribute('aria-pressed') !== 'true';
+    btn.setAttribute('aria-pressed', on);
+    btn.textContent = on ? '✓ Attending' : 'Attend';
+    btn.closest('.rsvp-card').classList.toggle('selected', on);
+    const any = selected().length > 0;
+    const wasHidden = form.hidden;
+    form.hidden = !any;
+    if (any && wasHidden) { form.elements.name.focus({ preventScroll: true }); form.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+  }));
+
+  // ---- submit ----
+  function mailtoHref(d) {
+    const body = 'Name: ' + d.name + '\nAffiliation: ' + (d.affiliation || '-') + '\nEmail: ' + (d.email || '-')
+      + '\nAttending: ' + d.events.map(id => EVENTS[id].label).join('; ');
+    return 'mailto:' + CONTACT + '?subject=' + encodeURIComponent('RSVP: AIChE 2026 – ' + d.name) + '&body=' + encodeURIComponent(body);
+  }
+  function showDone(d, viaEmail) {
+    document.getElementById('rsvp-main').hidden = true;
+    document.getElementById('rsvp-done').hidden = false;
+    document.getElementById('rsvp-thanks').textContent = 'Thank you, ' + d.name.split(/\s+/)[0] + '!';
+    document.getElementById('rsvp-done-msg').textContent = viaEmail
+      ? 'Your email app should open with your RSVP ready to send. I look forward to meeting you.'
+      : 'I look forward to meeting you in Minneapolis.';
+    document.getElementById('rsvp-done-cal').innerHTML = d.events
+      .map(id => '<div>' + calLinks(id, EVENTS[id].label + ': ') + '</div>').join('');
+    store.set('sent');
+    track('rsvp-submit');
+    root.querySelector('#rsvp-done .rsvp-later').focus({ preventScroll: true });
+  }
+  form.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    err.textContent = '';
+    const d = {
+      name: form.elements.name.value.trim(),
+      affiliation: form.elements.affiliation.value.trim(),
+      email: form.elements.email.value.trim(),
+      website: form.elements.website.value,
+      events: selected()
+    };
+    if (!d.name) { err.textContent = 'Please add your name.'; form.elements.name.focus(); return; }
+    if (!d.events.length) { err.textContent = 'Please choose at least one session.'; return; }
+    if (d.email && !form.elements.email.checkValidity()) { err.textContent = 'That email address looks incomplete.'; form.elements.email.focus(); return; }
+
+    if (!RSVP_ENDPOINT) { window.location.href = mailtoHref(d); showDone(d, true); return; }
+
+    const btn = form.querySelector('.rsvp-submit');
+    btn.disabled = true; btn.textContent = 'Sending…';
+    try {
+      const r = await fetch(RSVP_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) });
+      if (!r.ok) throw new Error(r.status);
+      showDone(d, false);
+    } catch (e) {
+      err.innerHTML = 'Sorry, that didn’t go through. You can <a href="' + mailtoHref(d) + '">email me instead</a>.';
+      btn.disabled = false; btn.textContent = "Let's connect";
+    }
+  });
+
+  // ---- show once per browser, shortly after the page settles ----
+  if (!store.get()) setTimeout(open, 1200);
+})();
+</script>
 <script data-goatcounter="https://flycorea.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>
   fetch('https://flycorea.goatcounter.com/counter/TOTAL.json')
