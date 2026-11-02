@@ -1,27 +1,11 @@
-# AIChE 2026 RSVP: 설정 방법
+# AIChE 2026 RSVP: 저장소 연결 방법
 
-## 이메일 알림 (기본, 한 번만 활성화)
+홈페이지 팝업의 **Let's connect** 버튼은 지금 이메일 앱을 여는 방식으로 동작합니다.
+아래 설정을 마치면 참석자 이름이 **비공개 GitHub 저장소의 `attendees.csv`** 에 자동으로 쌓입니다.
 
-팝업에서 **Attend → 이름 입력 → Let's connect** 를 누르면 RSVP가 `jkim4046@gatech.edu` 로
-메일로 옵니다. 메일 전송은 FormSubmit(formsubmit.co, 무료, 가입 없음)이 대신 해 줍니다.
-
-처음 한 번만 활성화가 필요합니다.
-
-1. https://ajinyoung-kim.github.io 에서 팝업을 열고 본인 이름으로 한 번 제출합니다.
-   (이때는 아직 활성화 전이라 "Sorry, that didn't go through"가 뜨는 게 정상입니다.)
-2. `jkim4046@gatech.edu` 로 온 FormSubmit 메일에서 **Activate Form** 을 누릅니다.
-   스팸함도 확인하세요.
-3. 다시 한 번 제출해서 "Thank you!" 화면과 RSVP 메일이 오는지 확인합니다.
-4. 브라우저의 사이트 데이터(localStorage)에 제출 기록이 남아 팝업이 자동으로 안 뜰 수 있습니다.
-   홈 화면 AIChE 소식 옆 **RSVP →** 버튼으로 언제든 다시 열 수 있습니다.
-
-참석자가 이메일을 남기면 받은 메일에서 바로 **답장** 하면 그 사람에게 갑니다.
-
-## (선택) GitHub에 CSV로도 기록하기
-
-이메일과 별도로 비공개 GitHub 저장소의 `attendees.csv` 에도 쌓고 싶을 때만 아래를 하세요.
-GitHub Pages는 정적 사이트라 쓰기 토큰을 숨겨 둘 작은 중계 서버(Cloudflare Worker, 무료)가
-필요합니다. 약 10분 걸립니다. 설정하면 이메일과 CSV에 동시에 기록됩니다.
+GitHub Pages는 정적 사이트라 브라우저에서 직접 GitHub에 쓸 수 없습니다. 쓰기 권한 토큰을
+페이지에 넣으면 누구나 볼 수 있기 때문입니다. 그래서 토큰을 숨겨 두는 작은 중계 서버
+(Cloudflare Worker, 무료)를 하나 둡니다. 약 10분 걸립니다.
 
 ## 1. 비공개 저장소 만들기 (1분)
 
