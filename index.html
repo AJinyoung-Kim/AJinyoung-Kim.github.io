@@ -156,35 +156,23 @@
   .rsvp-title { font-size: 1.45rem; margin: 2px 0 6px; }
   .rsvp-intro { font-size: .92rem; color: #444; margin-bottom: 16px; }
   .rsvp-events { display: grid; gap: 12px; }
-  .rsvp-card { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;
+  .rsvp-card { display: grid; grid-template-columns: 1fr;
                border: 1px solid var(--line); border-radius: 5px; padding: 14px 16px;
-               transition: border-color .15s ease, background-color .15s ease; }
-  .rsvp-card.selected { border-color: var(--accent); background: #fbf7f0; }
+               }
   .rsvp-card.ended { opacity: .55; }
   .rsvp-kind { font-size: .72rem; font-weight: bold; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); line-height: 1.4; }
   .rsvp-when { font-weight: bold; font-size: .95rem; margin-top: 3px; }
   .rsvp-where { font-size: .86rem; color: var(--muted); line-height: 1.5; }
   .rsvp-what { font-size: .88rem; font-style: italic; margin-top: 6px; line-height: 1.5; }
   .rsvp-cal { font-size: .78rem; color: var(--muted); margin-top: 6px; }
-  .rsvp-attend { font-family: inherit; font-size: .9rem; font-weight: bold; white-space: nowrap; min-width: 118px;
-                 padding: 8px 16px; border: 1.5px solid #1a3a5c; border-radius: 3px; background: #fff; color: #1a3a5c; cursor: pointer;
-                 transition: background-color .15s ease, color .15s ease; }
-  .rsvp-attend:hover { background: #eef2f6; }
-  .rsvp-attend[aria-pressed="true"] { background: #1a3a5c; color: #fff; }
-  .rsvp-attend:disabled { cursor: default; border-color: var(--line); color: var(--muted); background: #fff; }
   .rsvp-foot { margin-top: 14px; text-align: right; }
   .rsvp-later { background: none; border: 0; font-family: inherit; font-size: .85rem; color: var(--muted); cursor: pointer; text-decoration: underline; }
-  .rsvp-hint { margin-top: 14px; padding: 10px 14px; border-radius: 4px; background: #f1f5f9; font-size: .88rem; line-height: 1.6; }
-  .rsvp-hint[hidden] { display: none; }
-  .rsvp-hint q { font-weight: bold; quotes: "\201C" "\201D"; }
   .rsvp-link { background: none; border: 0; padding: 0; font: inherit; color: var(--link); cursor: pointer; font-weight: bold; white-space: nowrap; }
   .rsvp-link:hover { text-decoration: underline; }
   @media (max-width: 560px) {
     .rsvp-backdrop { padding: 10px; align-items: flex-end; }
     .rsvp-dialog { padding: 24px 18px 16px; max-height: calc(100vh - 20px); }
     .rsvp-title { font-size: 1.25rem; }
-    .rsvp-card { grid-template-columns: 1fr; gap: 10px; }
-    .rsvp-attend { width: 100%; }
   }
 </style>
 </head>
@@ -246,7 +234,7 @@
   <div style="margin-top:28px; border-top:1px solid var(--line); padding-top:24px;">
     <h2 style="margin-bottom:10px;">News</h2>
     <ul class="news-list">
-      <li><span class="news-date">Nov 2026</span><span><span class="news-new">Upcoming —</span> Presenting at <strong>2026 AIChE Annual Meeting</strong>, Minneapolis, MN (Poster, Nov 8 · Oral, Nov 11). <button type="button" class="rsvp-link" data-rsvp-open>RSVP →</button></span></li>
+      <li><span class="news-date">Nov 2026</span><span><span class="news-new">Upcoming —</span> Presenting at <strong>2026 AIChE Annual Meeting</strong>, Minneapolis, MN (Poster, Nov 8 · Oral, Nov 11). <button type="button" class="rsvp-link" data-rsvp-open>Details →</button></span></li>
       <li><span class="news-date">Nov 2026</span><span><span class="news-new">Accepted —</span> Manuscript accepted at <strong><em>Journal of Membrane Science</em></strong>: "A New Fluorinated Polyimide Precursor for Carbon Molecular Sieve Membranes."</span></li>
       <li><span class="news-date">Oct 2026</span><span><span class="news-new">Published —</span> Paper published in <strong><em>Advanced Science</em></strong>: "Transforming Gas Separations with Scalable Carbon Molecular Sieve Membranes Enabled by Chemically Tuned Hollow-Fiber Precursors." <a href="https://doi.org/10.1002/advs.78223" target="_blank">DOI</a></span></li>
       <li><span class="news-date">Sep 2026</span><span><span class="news-new">Published —</span> Paper published in <strong><em>Journal of Membrane Science Letters</em></strong>: "Composite Hot-Melt/Epoxy Potting Architecture for High-Pressure Sorp-Vection Hollow Fiber Modules." <a href="https://doi.org/10.1016/j.memlet.2026.100126" target="_blank">DOI</a></span></li>
@@ -271,7 +259,7 @@
         <span style="font-size:.82rem; color:var(--muted); padding-top:2px;">Nov 2026</span>
         <div>
           <span style="color:var(--accent); font-weight:bold;">Upcoming — </span>
-          Presenting at <strong>2026 AIChE Annual Meeting</strong>, Minneapolis, MN, November 2026. <button type="button" class="rsvp-link" data-rsvp-open>RSVP →</button>
+          Presenting at <strong>2026 AIChE Annual Meeting</strong>, Minneapolis, MN, November 2026. <button type="button" class="rsvp-link" data-rsvp-open>Details →</button>
           <div style="margin-top:6px; font-size:.88rem; color:var(--muted);">
             <div>• <strong>Poster:</strong> Engineering "Sorp-Vection" Systems for Energy-Efficient Purification of Complex Industrial Fluids — Meet the Faculty and Post-Doc Candidates Poster Session, Nov 8</div>
             <div>• <strong>Oral:</strong> CO₂-Assisted Sorp-Vection In Multi-Fiber Membrane Modules: Mitigating Concentration Polarization Via Fiber Bundling — Membrane Formation, Manufacturing, and Module Design I, Nov 11</div>
@@ -634,7 +622,7 @@
     <div id="rsvp-main">
       <p class="rsvp-eyebrow">2026 AIChE Annual Meeting · Minneapolis, MN</p>
       <h2 class="rsvp-title" id="rsvp-title">Let's connect at AIChE</h2>
-      <p class="rsvp-intro">I'm presenting twice this year and look forward to connecting with members of faculty search committees during the meeting. If you plan to stop by, tap <strong>Attend</strong> to send me a quick note on LinkedIn.</p>
+      <p class="rsvp-intro">I'm presenting twice this year and look forward to connecting with members of faculty search committees during the meeting. I hope to see you there.</p>
 
       <div class="rsvp-events">
         <div class="rsvp-card" data-event="poster">
@@ -645,7 +633,6 @@
             <div class="rsvp-what">Engineering “Sorp-Vection” Systems for Energy-Efficient Purification of Complex Industrial Fluids</div>
             <div class="rsvp-cal" data-cal="poster"></div>
           </div>
-          <button type="button" class="rsvp-attend" aria-pressed="false" data-attend="poster">Attend</button>
         </div>
         <div class="rsvp-card" data-event="oral">
           <div>
@@ -655,36 +642,28 @@
             <div class="rsvp-what">CO₂-Assisted Sorp-Vection in Multi-Fiber Membrane Modules: Mitigating Concentration Polarization via Fiber Bundling</div>
             <div class="rsvp-cal" data-cal="oral"></div>
           </div>
-          <button type="button" class="rsvp-attend" aria-pressed="false" data-attend="oral">Attend</button>
         </div>
       </div>
 
-      <p class="rsvp-hint" id="rsvp-hint" role="status" hidden></p>
-
-      <div class="rsvp-foot"><button type="button" class="rsvp-later" data-rsvp-close>Maybe later</button></div>
+      <div class="rsvp-foot"><button type="button" class="rsvp-later" data-rsvp-close>Close</button></div>
     </div>
   </div>
 </div>
 
 <script>
-/* AIChE 2026 RSVP popup.
-   "Attend" opens my LinkedIn profile in a new tab and copies a short
-   "I will attend!" note for the visitor to paste into a message. */
+/* AIChE 2026 popup: the two sessions with add-to-calendar links.
+   Opens once per visit; closing it keeps it quiet for that visit. */
 (function () {
-  const LINKEDIN = 'https://www.linkedin.com/in/ajinyoung/';
-  const ATTENDED = 'aiche2026-attended';                 // localStorage: never auto-open again
   const DISMISSED = 'aiche2026-dismissed';               // sessionStorage: quiet for this visit only
   const HIDE_AFTER = Date.parse('2026-11-12T05:59:00Z'); // end of Wed Nov 11, CST
   const EVENTS = {
     poster: {
-      note: 'I will attend! (AIChE poster, Sun Nov 8)',
       title: 'Jinyoung Kim · AIChE poster (Meet the Faculty and Post-Doc Candidates)',
       start: '20261108T190000Z', end: '20261108T210000Z',
       location: 'Exhibit Hall B, Poster board 126, 2026 AIChE Annual Meeting, Minneapolis, MN',
       details: 'Engineering "Sorp-Vection" Systems for Energy-Efficient Purification of Complex Industrial Fluids. https://ajinyoung-kim.github.io'
     },
     oral: {
-      note: 'I will attend! (AIChE talk, Wed Nov 11)',
       title: 'Jinyoung Kim · AIChE talk, Room 102B',
       start: '20261111T150300Z', end: '20261111T152400Z',
       location: 'Room 102B, 2026 AIChE Annual Meeting, Minneapolis, MN',
@@ -701,7 +680,6 @@
   const set = (st, k, v) => { try { window[st].setItem(k, v); } catch (e) {} };
   const track = (path) => { try { window.goatcounter && window.goatcounter.count && window.goatcounter.count({ path, event: true }); } catch (e) {} };
   const utcMs = (t) => Date.UTC(+t.slice(0,4), +t.slice(4,6) - 1, +t.slice(6,8), +t.slice(9,11), +t.slice(11,13));
-  const esc = (t) => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
   // ---- calendar links ----
   const gcal = (e) => 'https://calendar.google.com/calendar/render?action=TEMPLATE'
@@ -734,7 +712,7 @@
   root.querySelectorAll('.rsvp-card').forEach(card => {
     if (Date.now() > utcMs(EVENTS[card.dataset.event].end)) {
       card.classList.add('ended');
-      const b = card.querySelector('.rsvp-attend'); b.disabled = true; b.textContent = 'Ended';
+      card.querySelector('.rsvp-when').insertAdjacentText('beforeend', ' · Ended');
       const cal = card.querySelector('.rsvp-cal'); cal && cal.remove();
     }
   });
@@ -747,8 +725,7 @@
     root.hidden = false;
     document.body.style.overflow = 'hidden';
     requestAnimationFrame(() => root.classList.add('open'));
-    const first = root.querySelector('.rsvp-attend:not(:disabled)') || root.querySelector('.rsvp-close');
-    first && first.focus({ preventScroll: true });
+    root.querySelector('.rsvp-close').focus({ preventScroll: true });
     track('rsvp-open');
   }
   function close() {
@@ -772,40 +749,8 @@
   });
   openers.forEach(el => el.addEventListener('click', (ev) => { ev.preventDefault(); open(); }));
 
-  // ---- Attend: copy the note, open LinkedIn ----
-  function legacyCopy(text) {
-    const t = document.createElement('textarea');
-    t.value = text; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
-    document.body.appendChild(t); t.select();
-    let ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
-    t.remove(); return ok;
-  }
-  function copy(text) {   // start while this page still has focus, before LinkedIn opens
-    if (navigator.clipboard && window.isSecureContext) {
-      return navigator.clipboard.writeText(text).then(() => true, () => legacyCopy(text));
-    }
-    return Promise.resolve(legacyCopy(text));
-  }
-  const hint = document.getElementById('rsvp-hint');
-  root.querySelectorAll('.rsvp-attend').forEach(btn => btn.addEventListener('click', () => {
-    const note = EVENTS[btn.dataset.attend].note;
-    const copied = copy(note);
-    window.open(LINKEDIN, '_blank', 'noopener');
-    btn.setAttribute('aria-pressed', 'true');
-    btn.textContent = '✓ Attending';
-    btn.closest('.rsvp-card').classList.add('selected');
-    set('localStorage', ATTENDED, '1');
-    track('rsvp-attend-' + btn.dataset.attend);
-    copied.then(ok => {
-      hint.innerHTML = 'LinkedIn opened in a new tab. Press <strong>Message</strong> on my profile and '
-        + (ok ? 'paste the note I copied for you: ' : 'send: ') + '<q>' + esc(note) + '</q>'
-        + '<br><span style="color:var(--muted)">If you see <strong>Connect</strong> instead, choose <strong>Add a note</strong>.</span>';
-      hint.hidden = false;
-    });
-  }));
-
-  // ---- show on each new visit until the visitor taps Attend ----
-  if (!get('localStorage', ATTENDED) && !get('sessionStorage', DISMISSED)) setTimeout(open, 1200);
+  // ---- show once per visit ----
+  if (!get('sessionStorage', DISMISSED)) setTimeout(open, 1200);
 })();
 </script>
 <script data-goatcounter="https://flycorea.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
