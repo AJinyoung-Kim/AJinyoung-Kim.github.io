@@ -8,6 +8,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read
 
 jobs:
   deploy:
@@ -21,5 +22,9 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
+      # deploy-pages looks the artifact up once with no retry; give the
+      # artifact listing a moment to catch up after the upload finalizes
+      - name: Wait for artifact to register
+        run: sleep 20
       - id: deployment
         uses: actions/deploy-pages@v4
